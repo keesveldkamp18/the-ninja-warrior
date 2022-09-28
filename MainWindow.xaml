@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Canvas>
-        <Button Height="50" Width="200" Canvas.Top="50" Canvas.Left="100" Click="Button_Click">Start Game</Button>
+        <Button Height="50" Width="200" Canvas.Top="50" Canvas.Left="100" Click="StartGameButton_Click">Start Game</Button>
     </Canvas>
 </Window>
