@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+    <Canvas>
+        <Button Height="50" Width="200" Canvas.Top="50" Canvas.Left="100" Click="StartGameButton_Click">Start Game</Button>
+    </Canvas>
 </Window>
