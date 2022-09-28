@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="GameWindow" Height="450" Width="800">
     <Canvas>
-        <Rectangle Height="75" Width="300" Fill="LightGray" Canvas.Bottom="75" Canvas.Right="0"></Rectangle>
-        <Rectangle Height="75" Width="300" Fill="LightGray" Canvas.Bottom="0"></Rectangle>
+        <Rectangle Height="75" Width="400" Fill="LightGray" Canvas.Bottom="75" Canvas.Right="0"></Rectangle>
+        <Rectangle Height="75" Width="400" Fill="LightGray" Canvas.Bottom="0"></Rectangle>
         <Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Left="100" Canvas.Bottom="75"></Rectangle>
     </Canvas>
 </Window>
