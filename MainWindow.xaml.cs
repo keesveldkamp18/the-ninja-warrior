@@ -27,7 +27,8 @@ namespace project_arcade
 
 		private void StartGameButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			GameWindow gameWindow = new GameWindow();
+			gameWindow.Show();
 		}
 	}
 }
