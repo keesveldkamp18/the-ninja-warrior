@@ -23,5 +23,12 @@ namespace project_arcade
 		{
 			InitializeComponent();
 		}
+
+		private void ReturnToMenuBtn(object sender, RoutedEventArgs e)
+		{
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+			this.Close();
+		}
 	}
 }

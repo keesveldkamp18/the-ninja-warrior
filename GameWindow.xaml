@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="GameWindow" Height="450" Width="800">
     <Canvas>
+        <Button Height="20" Width="50" Click="ReturnToMenuBtn">Return</Button>
         <Rectangle Height="75" Width="400" Fill="LightGray" Canvas.Bottom="75" Canvas.Right="0"></Rectangle>
         <Rectangle Height="75" Width="400" Fill="LightGray" Canvas.Bottom="0"></Rectangle>
         <Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Left="100" Canvas.Bottom="75"></Rectangle>
