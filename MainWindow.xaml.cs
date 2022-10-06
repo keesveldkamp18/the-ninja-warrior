@@ -25,11 +25,37 @@ namespace project_arcade
 			InitializeComponent();
 		}
 
-		private void StartGameButton_Click(object sender, RoutedEventArgs e)
+		private void one_player_button(object sender, RoutedEventArgs e)
 		{
-			GameWindow gameWindow = new GameWindow();
-			gameWindow.Show();
+			_1spelerkeuze GW = new _1spelerkeuze();
+			GW.Visibility = Visibility.Visible;
 			this.Close();
 		}
+
+		private void two_player_button(object sender, RoutedEventArgs e)
+		{
+			_2spelerkeuze gw = new _2spelerkeuze();
+			gw.Visibility = Visibility.Visible;
+			this.Close();
+		}
+
+		private void Highscores_button(object sender, RoutedEventArgs e)
+		{
+			HighscoresWindow GW = new HighscoresWindow();
+			GW.Visibility = Visibility.Visible;
+			this.Close();
+		}
+
+		private void Quit_button(object sender, RoutedEventArgs e)
+		{
+			Application.Current.Shutdown();
+		}
+
+		//private void StartGameButton_Click(object sender, RoutedEventArgs e)
+		//{
+		//	GameWindow gameWindow = new GameWindow();
+		//	gameWindow.Show();
+		//	this.Close();
+		//}
 	}
 }
