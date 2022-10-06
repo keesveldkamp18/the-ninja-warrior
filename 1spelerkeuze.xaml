@@ -5,10 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
-        Title="_1spelerkeuze" Height="450" Width="800">
+        Title="_1spelerkeuze" Height="500" Width="900" WindowState="Maximized" WindowStyle="None">
     <Grid>
-        
-        
         <Button Height="50" Width="60" Margin="698,352,42,32" Click="OnePlayerToMain">back</Button>
         <Button Height="50" Width="60" Margin="370,347,370,37" Click="OnePlayerToGame">play</Button>
     </Grid>

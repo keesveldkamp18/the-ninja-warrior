@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="900">
+        Title="MainWindow" Height="500" Width="900" WindowState="Maximized" WindowStyle="None">
     <!--<Canvas>
         <Button Height="50" Width="200" Canvas.Top="50" Canvas.Left="100" Click="StartGameButton_Click">Start Game</Button>
     </Canvas>-->

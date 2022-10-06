@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
-        Title="_2spelerkeuze" Height="450" Width="800">
+        Title="_2spelerkeuze" Height="500" Width="900" WindowState="Maximized" WindowStyle="None">
     <Grid>
 
 
