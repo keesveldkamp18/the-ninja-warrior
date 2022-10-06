@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Canvas>
+        Title="MainWindow" Height="500" Width="900" WindowState="Maximized" WindowStyle="None">
+    <!--<Canvas>
         <Button Height="50" Width="200" Canvas.Top="50" Canvas.Left="100" Click="StartGameButton_Click">Start Game</Button>
-    </Canvas>
+    </Canvas>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Ninja Runner"
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center" FontSize="36"
+               FontFamily="Arial Black">
+        </Label>
+        <!--TODO: margins moeten nog worden aangepast om mooi te maken-->
+        <Button Grid.Row="1" Height="40" Width="100" Margin="223,92,477,202" Click="one_player_button">1 Speler</Button>
+        <Button Grid.Row="1" Height="40" Width="100" Margin="223,193,477,101" Click="Highscores_button">Highscores</Button>
+        <Button Grid.Row="1" Height="40" Width="100" Margin="457,92,243,202" Click="two_player_button">2 Spelers</Button>
+        <Button Grid.Row="1" Height="40" Width="100" Margin="457,193,243,101" Click="Quit_button">quit</Button>
+    </Grid>
 </Window>
