@@ -25,8 +25,10 @@ namespace project_arcade
         DispatcherTimer timer = new DispatcherTimer();
 
         int speed = 10;
-        int dropSpeed = 10;
-        bool goLeft, goRight;
+        int gravity = 0;
+        bool keyUpOrDown;
+        // player movement bool
+        bool goLeft, goRight, jump;
 
         public GameWindow()
         {
@@ -40,75 +42,58 @@ namespace project_arcade
 
         private void MainTimerEvent(object? sender, EventArgs e)
         {
-            // when detection works this can be used to drop the player on the platforms
-            // Canvas.SetTop(Player, Canvas.GetTop(Player) + dropSpeed);
-
-            if (goLeft == true && Canvas.GetLeft(Player) > 0)
-            {
-                Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
-            }
-            if (goRight == true && Canvas.GetLeft(Player) + (Player.Width + 15) < Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
-            }
-
-            // check if player leaves screen.
-            // TODO: Fix error no height somehow
-            //if (Canvas.GetTop(Player) + (Player.Height * 2) > Application.Current.MainWindow.Height)
+            #region player movement
+            //if (goLeft && Canvas.GetLeft(Player) > 0)
             //{
-            //    Canvas.SetTop(Player, -200);
+            //    Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
             //}
-
-            //// colission detection
-            //foreach (var x in gameCanvas.Children.OfType<Rectangle>())
+            //if (goRight)
             //{
-            //    if ((string)x.Tag == "Platform")
-            //    {
-            //        x.Stroke = Brushes.Black;
-            //        Rect playerHitBox = new Rect(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
-            //        Rect platformHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-
-            //        if (playerHitBox.IntersectsWith(platformHitBox))
-            //        {
-            //            dropSpeed = 0;
-            //            Canvas.SetTop(Player, Canvas.GetTop(x) - Player.Height);
-            //        }
-            //        else
-            //        {
-            //            dropSpeed = 10;
-            //        }
-            //    }
+            //    Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
             //}
+            if (jump)
+            {
+                // lower the number the heigher it will jump
+                gravity = -20;
+            }
+            // makes the player jump and use gravity to fall back down.
+            Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);       
+            gravity++;
+            #endregion
         }
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            // When key is down a will be true for player movement
-            bool a = true;
-            MovePlayer(e, a);
+            // When key is down a will be true for MovePlayer function.
+            keyUpOrDown = true;
+            MovePlayer(e, keyUpOrDown);
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
-            // When key is up a will be false for player movement
-            bool a = false;
-            MovePlayer(e, a);
+            // When key is up a will be false for MovePlayer function.
+            keyUpOrDown = false;
+            MovePlayer(e, keyUpOrDown);
         }
 
         /// <summary>
-        /// Bepaald of speler naar rechts gaat of naar links
+        /// Decides the player movement.
         /// </summary>
-        /// <param name="e">Welke key is ingedrukt</param>
-        /// <param name="a">true of false afhankelijk van key up of key down</param>
-        private void MovePlayer(KeyEventArgs e, bool a)
+        /// <param name="e">Wich key is pressed</param>
+        /// <param name="keyUpOrDown">true or false depending if key is up or down</param>
+        private void MovePlayer(KeyEventArgs e, bool keyUpOrDown)
         {
-            if (e.Key == Key.Left)
+            //if (e.Key == Key.Left)
+            //{
+            //    goLeft = keyUpOrDown;
+            //}
+            //if (e.Key == Key.Right)
+            //{
+            //    goRight = keyUpOrDown;
+            //}
+            if (e.Key == Key.Space)
             {
-                goLeft = a;
-            }
-            if (e.Key == Key.Right)
-            {
-                goRight = a;
+                jump = keyUpOrDown;
             }
         }
 
