@@ -32,49 +32,33 @@ namespace project_arcade
             InitializeComponent();
 
             gameCanvas.Focus();
-            timer.Tick += MainTimerEvent;
+            timer.Tick += GameEngine;
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
         }
 
-        private void MainTimerEvent(object? sender, EventArgs e)
+        private void GameEngine(object? sender, EventArgs e)
         {
-            #region player gravity
-            // makes the player jump and use gravity to fall back down.       
-            Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
-            gravity++;
-            #endregion
-        }
-
-        private void KeyIsDown(object sender, KeyEventArgs e)
-        {
-            MovePlayer(e);
-        }
-
-        private void KeyIsUp(object sender, KeyEventArgs e)
-        {
-            MovePlayer(e);
-        }
-
-        /// <summary>
-        /// Decides the player movement.
-        /// </summary>
-        /// <param name="e">Wich key is pressed</param>
-        private void MovePlayer(KeyEventArgs e)
-        {
-            if (e.Key == Key.Left && Canvas.GetLeft(Player) > 0)
+            #region player movement
+            // move left
+            if (Keyboard.IsKeyDown(Key.Left) && Canvas.GetLeft(Player) > 0)
             {
                 Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
             }
-            if (e.Key == Key.Right)
+            // move right
+            if (Keyboard.IsKeyDown(Key.Right))
             {
                 Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
             }
-            if (e.Key == Key.Space)
+            //jump
+            if(Keyboard.IsKeyDown(Key.Space))
             {
-                // lower the number the heigher it will jump
                 gravity = -20;
             }
+            // gravity use gravity to fall back down.       
+            Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
+            gravity++;
+            #endregion
         }
 
         /// <summary>
