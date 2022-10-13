@@ -39,9 +39,9 @@ namespace project_arcade
 
 		private void GameEngine(object? sender, EventArgs e)
 		{
-            #region player move controls
-            // Horizontal movement
-            if (Keyboard.IsKeyDown(Key.Left))
+			#region player move controls
+			// Horizontal movement
+			if(Keyboard.IsKeyDown(Key.Left))
 			{
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
 			}
@@ -56,17 +56,17 @@ namespace project_arcade
 				gravity = -20;
 				onFloor = false;
 			}
-            #endregion
+			#endregion
 
-            #region Player Gravity
-            // Makes the player fall down
-            lastPlayerTop = Canvas.GetTop(Player);
+			#region Player Gravity
+			// Makes the player fall down
+			lastPlayerTop = Canvas.GetTop(Player);
 			gravity++;
 			Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
-            #endregion
+			#endregion
 
-            #region player collision detection
-            Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
+			#region player collision detection
+			Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
 
 			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
@@ -83,12 +83,19 @@ namespace project_arcade
 					}
 				}
 			}
-            #endregion
+			#endregion
 
-            if(Canvas.GetLeft(Player) < 0)
+			#region player screen bounds detection
+			// if the player goes too far left or right it puts them back
+			if(Canvas.GetLeft(Player) < 0)
 			{
 				Canvas.SetLeft(Player, 0);
 			}
+			else if(Canvas.GetLeft(Player) > 1525)
+			{
+				Canvas.SetLeft(Player, 1525);
+			}
+			#endregion
 		}
 
 		/// <summary>
