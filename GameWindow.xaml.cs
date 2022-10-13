@@ -39,8 +39,9 @@ namespace project_arcade
 
 		private void GameEngine(object? sender, EventArgs e)
 		{
-			// Horizontal movement
-			if(Keyboard.IsKeyDown(Key.Left))
+            #region player move controls
+            // Horizontal movement
+            if (Keyboard.IsKeyDown(Key.Left))
 			{
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
 			}
@@ -55,10 +56,11 @@ namespace project_arcade
 				gravity = -20;
 				onFloor = false;
 			}
+            #endregion
 
-			#region Player Gravity
-			// Makes the player fall down
-			lastPlayerTop = Canvas.GetTop(Player);
+            #region Player Gravity
+            // Makes the player fall down
+            lastPlayerTop = Canvas.GetTop(Player);
 			gravity++;
 			Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
 			#endregion
