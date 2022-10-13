@@ -26,9 +26,6 @@ namespace project_arcade
 
         int speed = 10;
         int gravity = 0;
-        bool keyUpOrDown;
-        // player movement bool
-        bool goLeft, goRight, jump;
 
         public GameWindow()
         {
@@ -42,58 +39,41 @@ namespace project_arcade
 
         private void MainTimerEvent(object? sender, EventArgs e)
         {
-            #region player movement
-            //if (goLeft && Canvas.GetLeft(Player) > 0)
-            //{
-            //    Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
-            //}
-            //if (goRight)
-            //{
-            //    Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
-            //}
-            if (jump)
-            {
-                // lower the number the heigher it will jump
-                gravity = -20;
-            }
-            // makes the player jump and use gravity to fall back down.
-            Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);       
+            #region player gravity
+            // makes the player jump and use gravity to fall back down.       
+            Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
             gravity++;
             #endregion
         }
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            // When key is down a will be true for MovePlayer function.
-            keyUpOrDown = true;
-            MovePlayer(e, keyUpOrDown);
+            MovePlayer(e);
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
-            // When key is up a will be false for MovePlayer function.
-            keyUpOrDown = false;
-            MovePlayer(e, keyUpOrDown);
+            MovePlayer(e);
         }
 
         /// <summary>
         /// Decides the player movement.
         /// </summary>
         /// <param name="e">Wich key is pressed</param>
-        /// <param name="keyUpOrDown">true or false depending if key is up or down</param>
-        private void MovePlayer(KeyEventArgs e, bool keyUpOrDown)
+        private void MovePlayer(KeyEventArgs e)
         {
-            //if (e.Key == Key.Left)
-            //{
-            //    goLeft = keyUpOrDown;
-            //}
-            //if (e.Key == Key.Right)
-            //{
-            //    goRight = keyUpOrDown;
-            //}
+            if (e.Key == Key.Left && Canvas.GetLeft(Player) > 0)
+            {
+                Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
+            }
+            if (e.Key == Key.Right)
+            {
+                Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
+            }
             if (e.Key == Key.Space)
             {
-                jump = keyUpOrDown;
+                // lower the number the heigher it will jump
+                gravity = -20;
             }
         }
 

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="GameWindow" WindowState="Maximized" WindowStyle="None">
     <Canvas Name="gameCanvas" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp">
-        <Button Height="20" Width="50" Click="ReturnToMenuBtn">Return</Button>
+        <Button Height="20" Width="50" Focusable="false" Click="ReturnToMenuBtn">Return</Button>
         <Rectangle Height="75" Width="400" Tag="Platform" Fill="LightGray" Canvas.Bottom="75" Canvas.Right="0"></Rectangle>
         <Rectangle Height="75" Width="400" Tag="Platform" Fill="LightGray" Canvas.Bottom="0"></Rectangle>
         <Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Left="55" Canvas.Bottom="75" Canvas.Top="152"></Rectangle>
