@@ -63,9 +63,10 @@ namespace project_arcade
             lastPlayerTop = Canvas.GetTop(Player);
 			gravity++;
 			Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
-			#endregion
+            #endregion
 
-			Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
+            #region player collision detection
+            Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
 
 			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
@@ -82,8 +83,9 @@ namespace project_arcade
 					}
 				}
 			}
+            #endregion
 
-			if(Canvas.GetLeft(Player) < 0)
+            if(Canvas.GetLeft(Player) < 0)
 			{
 				Canvas.SetLeft(Player, 0);
 			}
