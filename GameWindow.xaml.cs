@@ -49,19 +49,19 @@ namespace project_arcade
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
 			}
 
-			#region Player Gravity
-			// Makes the player fall down
-			lastPlayerTop = Canvas.GetTop(Player);
-			gravity++;
-			Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
-			#endregion
-
 			// Jumping
 			if(Keyboard.IsKeyDown(Key.Space) && onFloor)
 			{
 				gravity = -20;
 				onFloor = false;
 			}
+
+			#region Player Gravity
+			// Makes the player fall down
+			lastPlayerTop = Canvas.GetTop(Player);
+			gravity++;
+			Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
+			#endregion
 
 			Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
 
