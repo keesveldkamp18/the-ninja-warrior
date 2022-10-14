@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
-        Title="GameWindow" WindowState="Maximized" WindowStyle="None">
-    <Canvas Name="gameCanvas" Focusable="True">
-        <Button Height="20" Width="50" Focusable="false" Click="ReturnToMenuBtn">Return</Button>
-        <Rectangle Height="75" Width="400" Tag="Platform" Fill="LightGray" Canvas.Bottom="75" Canvas.Right="0"></Rectangle>
-        <Rectangle Height="75" Width="400" Tag="Platform" Fill="LightGray" Canvas.Bottom="0"></Rectangle>
-        <Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Left="55" Canvas.Bottom="75" Canvas.Top="152"></Rectangle>
-    </Canvas>
+        Title="GameWindow" SizeToContent="WidthAndHeight">
+	<Canvas Name="gameCanvas" Focusable="False" Height="900" Width="1600">
+		<Button Height="20" Width="50" Focusable="False" Click="ReturnToMenuBtn">Return</Button>
+		<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="825" Canvas.Left="0"></Rectangle>
+		<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="750" Canvas.Left="950"></Rectangle>
+		<Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"></Rectangle>
+	</Canvas>
 </Window>
