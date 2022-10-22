@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static System.Windows.MessageBoxResult;
 
 namespace project_arcade
 {
@@ -41,17 +42,17 @@ namespace project_arcade
 		{
 			#region player move controls
 			// Horizontal movement
-			if(Keyboard.IsKeyDown(Key.Left))
+			if (Keyboard.IsKeyDown(Key.Left))
 			{
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
 			}
-			if(Keyboard.IsKeyDown(Key.Right))
+			if (Keyboard.IsKeyDown(Key.Right))
 			{
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
 			}
 
 			// Jumping
-			if(Keyboard.IsKeyDown(Key.Space) && onFloor)
+			if (Keyboard.IsKeyDown(Key.Space) && onFloor)
 			{
 				gravity = -20;
 				onFloor = false;
@@ -68,14 +69,14 @@ namespace project_arcade
 			#region player collision detection
 			Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
 
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
-				if((string)rectangle.Tag == "Platform")
+				if ((string)rectangle.Tag == "Platform")
 				{
 					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
 					// Don't let the player fall through the platform iff the player was above or on the platform the previous tick
-					if(playerRect.IntersectsWith(platformRect) && lastPlayerTop + Player.Height <= Canvas.GetTop(rectangle))
+					if (playerRect.IntersectsWith(platformRect) && lastPlayerTop + Player.Height <= Canvas.GetTop(rectangle))
 					{
 						gravity = 0;
 						Canvas.SetTop(Player, Canvas.GetTop(rectangle) - Player.Height);
@@ -87,27 +88,28 @@ namespace project_arcade
 
 			#region player screen bounds detection
 			// if the player goes too far left or right it puts them back
-			if(Canvas.GetLeft(Player) < 0)
+			if (Canvas.GetLeft(Player) < 0)
 			{
 				Canvas.SetLeft(Player, 0);
 			}
-			else if(Canvas.GetLeft(Player) > 1525)
+			else if (Canvas.GetLeft(Player) > 1525)
 			{
 				Canvas.SetLeft(Player, 1525);
 			}
 			#endregion
+
+			#region pause function
+			if (!Keyboard.IsKeyDown(Key.P)) return;
+			const string caption = "PAUZE";
+			const string message = "Wil je ophouden met spelen ??";
+			const MessageBoxButton buttons = MessageBoxButton.YesNo;
+			if (MessageBox.Show(message, caption, buttons) != Yes) return;
+			// OK code
+			MainWindow mainWindow = new();
+			mainWindow.Show();
+			Close();
+			#endregion
 		}
 
-		/// <summary>
-		/// Return to menu
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ReturnToMenuBtn(object sender, RoutedEventArgs e)
-		{
-			MainWindow mainWindow = new MainWindow();
-			mainWindow.Show();
-			this.Close();
-		}
 	}
 }
