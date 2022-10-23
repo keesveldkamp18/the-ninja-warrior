@@ -11,12 +11,12 @@ namespace project_arcade
 	public partial class GameWindow : Window
 	{
 		#region Variables
-		DispatcherTimer timer = new DispatcherTimer();
+		private readonly DispatcherTimer timer = new();
 
-		int speed = 10;
-		int gravity;
-		double lastPlayerTop;
-		bool onFloor;
+		private const int speed = 10;
+		private int gravity;
+		private double lastPlayerTop;
+		private bool onFloor;
 		#endregion
 
 		public GameWindow()
