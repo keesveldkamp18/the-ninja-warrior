@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -15,8 +17,12 @@ namespace project_arcade
 
 		private const int speed = 10;
 		private int gravity;
+		private int animationFrame;
 		private double lastPlayerTop;
 		private bool onFloor;
+		private bool paused;
+		private bool playing;
+		private bool escapeToggle;
 		#endregion
 
 		public GameWindow()
@@ -35,17 +41,25 @@ namespace project_arcade
 
 		private void GameEngine(object? sender, EventArgs e)
 		{
-			PlayerMovement();
-
-			PlayerGravity();
-
-			PlayerCollisionDetection();
-
-			PlayerScreenBoundsDetection();
-
 			PauseChecking();
 
-			BackgroundParallax();
+			if(!paused)
+			{
+				if(playing)
+				{
+					AnimatePlayer();
+
+					PlayerMovement();
+
+					PlayerGravity();
+
+					PlayerCollisionDetection();
+
+					PlayerScreenBoundsDetection();
+				}
+
+				BackgroundParallax();
+			}
 		}
 
 		private void PlayerScreenBoundsDetection()
@@ -55,10 +69,18 @@ namespace project_arcade
 			{
 				Canvas.SetLeft(Player, 0);
 			}
-			else if(Canvas.GetLeft(Player) > 1525)
+			else if(Canvas.GetLeft(Player) > 1480)
 			{
-				Canvas.SetLeft(Player, 1525);
+				Canvas.SetLeft(Player, 1480);
 			}
+		}
+
+		private void AnimatePlayer()
+		{
+			// Increment the animation frame every tick and roll over every 40 ticks but change the player sprite every 4 ticks
+			Player.Source = new BitmapImage(new("/Images/Ninja/Idle/" + ((animationFrame / 4) + 1) + ".png", UriKind.Relative));
+
+			animationFrame = (animationFrame += 1) % 40;
 		}
 
 		private void PlayerMovement()
@@ -66,11 +88,13 @@ namespace project_arcade
 			// Move left if the left arrow key is held and/or right if the right arrow key is held
 			if(Keyboard.IsKeyDown(Key.Left))
 			{
+				Player.RenderTransform = new ScaleTransform(-1, 1);
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
 			}
 
 			if(Keyboard.IsKeyDown(Key.Right))
 			{
+				Player.RenderTransform = new ScaleTransform(1, 1);
 				Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
 			}
 
@@ -94,7 +118,7 @@ namespace project_arcade
 		{
 			Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
 
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach(var rectangle in ObjectCanvas.Children.OfType<Rectangle>())
 			{
 				if((string)rectangle.Tag == "Platform")
 				{
@@ -113,7 +137,7 @@ namespace project_arcade
 
 		private void BackgroundParallax()
 		{
-			var backgroundSegments = gameCanvas.Children.OfType<Image>().Where(i => (string)i.Tag == "Background").ToArray();
+			var backgroundSegments = BackgroundCanvas.Children.OfType<Image>().Where(i => (string)i.Tag == "Background").ToArray();
 
 			// Move each segment a little left to simulate depth
 			for(int i = 0; i < backgroundSegments.Length; i++)
@@ -125,17 +149,74 @@ namespace project_arcade
 
 		private void PauseChecking()
 		{
-			// If P was pressed...
-			if(!Keyboard.IsKeyDown(Key.P)) return;
-			const string caption = "PAUZE";
-			const string message = "Wil je stoppen met spelen?";
-			const MessageBoxButton buttons = MessageBoxButton.YesNo;
+			// Toggle the pause menu every time the player presses the desired key
+			if(Keyboard.IsKeyDown(Key.Escape))
+			{
+				if(!escapeToggle)
+				{
+					escapeToggle = true;
+					if(playing)
+					{
+						paused = !paused;
+						PauseCanvas.Visibility = paused ? Visibility.Visible : Visibility.Hidden;
+					}
+				}
+			}
+			else
+			{
+				escapeToggle = false;
+			}
+		}
 
-			// ...show a window and return to the main menu if Yes was clicked
-			if(MessageBox.Show(message, caption, buttons) != MessageBoxResult.Yes) return;
-			MainWindow mainWindow = new();
-			mainWindow.Show();
+		private void ResumeGame()
+		{
+			paused = false;
+			PauseCanvas.Visibility = Visibility.Hidden;
+		}
+
+		private void InitializeGameVariables()
+		{
+			Canvas.SetTop(Player, 675);
+			Canvas.SetLeft(Player, 75);
+			gravity = 0;
+			playing = true;
+			StartCanvas.Visibility = Visibility.Hidden;
+			ObjectCanvas.Visibility = Visibility.Visible;
+		}
+
+		private void StartButton_Click(object sender, RoutedEventArgs e)
+		{
+			InitializeGameVariables();
+		}
+
+		private void ScoresButton_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void QuitButton_Click(object sender, RoutedEventArgs e)
+		{
 			Close();
+		}
+
+		private void ResumeButton_Click(object sender, RoutedEventArgs e)
+		{
+			ResumeGame();
+		}
+
+		private void RestartButton_Click(object sender, RoutedEventArgs e)
+		{
+			InitializeGameVariables();
+			ResumeGame();
+		}
+
+		private void MenuButton_Click(object sender, RoutedEventArgs e)
+		{
+			playing = false;
+			paused = false;
+			StartCanvas.Visibility = Visibility.Visible;
+			PauseCanvas.Visibility = Visibility.Hidden;
+			ObjectCanvas.Visibility = Visibility.Hidden;
 		}
 	}
 }
