@@ -15,6 +15,7 @@
 		<Rectangle Height="425" Width="1600" Fill="DarkSlateBlue" Opacity="0.25" Canvas.Top="475" Canvas.Left="0"/>
 		<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="825" Canvas.Left="0"/>
 		<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="750" Canvas.Left="950"/>
-		<Rectangle Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"/>
+		<Rectangle Name="Player1" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"/>
+		<Rectangle Name="Player2" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"/>
 	</Canvas>
 </Window>

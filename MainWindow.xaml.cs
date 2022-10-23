@@ -25,14 +25,14 @@ namespace project_arcade
             InitializeComponent();
         }
 
-        private void one_player_button(object sender, RoutedEventArgs e)
+        private void One_player_button(object sender, RoutedEventArgs e)
         {
             _1spelerkeuze GW = new _1spelerkeuze();
             GW.Visibility = Visibility.Visible;
             this.Close();
         }
 
-        private void two_player_button(object sender, RoutedEventArgs e)
+        private void Two_player_button(object sender, RoutedEventArgs e)
         {
             _2spelerkeuze gw = new _2spelerkeuze();
             gw.Visibility = Visibility.Visible;
