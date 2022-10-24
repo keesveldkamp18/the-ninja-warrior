@@ -47,6 +47,10 @@
 		<None Remove="Images\Ninja\Run\8.png" />
 		<None Remove="Images\Ninja\Run\9.png" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MySql.Data" Version="8.0.31" />
+	</ItemGroup>
 	
 	<ItemGroup>
 		<Resource Include="Fonts\Comfortaa.ttf" />
