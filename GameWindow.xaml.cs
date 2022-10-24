@@ -22,6 +22,7 @@ namespace project_arcade
 		private bool player2OnFloor;
 
 		public bool secondPlayer = false;
+		public UIElement Platform2;
 
 		#endregion
 
@@ -49,12 +50,65 @@ namespace project_arcade
 
 			PlayerScreenBoundsDetection();
 
+			CheckMultiPlayer();
+
+			CheckIfPlayerFals();
+
 			PauseChecking();
 
 			BackgroundParallax();
 		}
 
-		private void PlayerScreenBoundsDetection()
+		private void CheckMultiPlayer()
+		{
+			if (!secondPlayer)
+			{
+				gameCanvas.Children.Remove(Player2);
+				// TODO: find a better solution ???
+				gameCanvas.Children.Remove(platform1Player2);
+				gameCanvas.Children.Remove(platform2Player2);
+            }
+        }
+
+		private void CheckIfPlayerFals()
+		{
+			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
+			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
+
+			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			{
+				if ((string)rectangle.Tag == "FloorP1")
+				{
+					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+
+					// when player hits the floor the game is over ??
+					if (player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
+					{
+                        gravity1Player = 0;
+                        Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
+						MessageBox.Show("Einde spel player 1");
+                    }
+                }
+
+				if (secondPlayer)
+				{
+                    if ((string)rectangle.Tag == "FloorP2")
+                    {
+                        Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+
+                        // when player hits the floor the game is over ??
+                        if (player2Rect.IntersectsWith(platformRect) && lastPlayer2Top + Player1.Height <= Canvas.GetTop(rectangle))
+                        {
+                            gravity1Player = 0;
+                            Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player2.Height);
+                            MessageBox.Show("Einde spel player 2");
+                        }
+                    }
+                }                
+            }
+		}
+
+        private void PlayerScreenBoundsDetection()
 		{
 			// Keep the player within view
 			if(Canvas.GetLeft(Player1) < 0)
