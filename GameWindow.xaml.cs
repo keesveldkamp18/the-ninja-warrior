@@ -12,17 +12,52 @@ namespace project_arcade
 {
 	public partial class GameWindow : Window
 	{
+		public class Controls
+		{
+			public Key jump;
+			public Key left;
+			public Key right;
+
+			public Controls(Key left, Key right, Key jump)
+			{
+				this.jump = jump;
+				this.left = left;
+				this.right = right;
+			}
+		}
+
+		public class Player
+		{
+			public Image image;
+			public Controls controls;
+
+			public int gravity;
+			public int animationFrame;
+			public double lastTop;
+			public bool onFloor;
+
+			public Player(Image image, Controls controls)
+			{
+				this.image = image;
+				this.controls = controls;
+			}
+		}
+
 		#region Variables
 		private readonly DispatcherTimer timer = new();
-
+		private Player[] players = new Player[2];
+		
 		private const int speed = 10;
-		private int gravity;
-		private int animationFrame;
-		private double lastPlayerTop;
-		private bool onFloor;
+		/// <summary>
+		/// Controls whether parallax scrolling, player animation, movement, gravity, collision detection and screen boundary detection are enabled.
+		/// </summary>
 		private bool paused;
+		/// <summary>
+		/// Controls whether player animation, movement, gravity, collision detection and screen boundary detection are enabled.
+		/// </summary>
 		private bool playing;
 		private bool escapeToggle;
+		private bool multiplayer = true;
 		#endregion
 
 		public GameWindow()
@@ -34,6 +69,14 @@ namespace project_arcade
 
 		private void InitializeGameWindow()
 		{
+			players[0] = new(PlayerOne, new(Key.A, Key.D, Key.W));
+			players[1] = new(PlayerTwo, new(Key.Left, Key.Right, Key.Up)) { animationFrame = 20 };
+
+			if(!multiplayer)
+			{
+				PlayerTwo.Visibility = Visibility.Hidden;
+			}
+
 			timer.Tick += GameEngine;
 			timer.Interval = TimeSpan.FromMilliseconds(20);
 			timer.Start();
@@ -47,76 +90,81 @@ namespace project_arcade
 			{
 				if(playing)
 				{
-					AnimatePlayer();
+					for(int i = 0; i < players.Length; i++)
+					{
+						AnimatePlayer(players[i]);
 
-					PlayerMovement();
+						if(!multiplayer && i > 0) break;
 
-					PlayerGravity();
+						MovePlayer(players[i]);
 
-					PlayerCollisionDetection();
+						PlayerGravity(players[i]);
 
-					PlayerScreenBoundsDetection();
+						PlayerCollisionDetection(players[i]);
+
+						PlayerScreenBoundsDetection(players[i]);
+					}
 				}
 
 				BackgroundParallax();
 			}
 		}
 
-		private void PlayerScreenBoundsDetection()
+		private void PlayerScreenBoundsDetection(Player player)
 		{
 			// Keep the player within view
-			if(Canvas.GetLeft(Player) < 0)
+			if(Canvas.GetLeft(player.image) < 0)
 			{
-				Canvas.SetLeft(Player, 0);
+				Canvas.SetLeft(player.image, 0);
 			}
-			else if(Canvas.GetLeft(Player) > 1480)
+			else if(Canvas.GetLeft(player.image) > 1480)
 			{
-				Canvas.SetLeft(Player, 1480);
+				Canvas.SetLeft(player.image, 1480);
 			}
 		}
 
-		private void AnimatePlayer()
+		private void AnimatePlayer(Player player)
 		{
 			// Increment the animation frame every tick and roll over every 40 ticks but change the player sprite every 4 ticks
-			Player.Source = new BitmapImage(new("/Images/Ninja/Idle/" + ((animationFrame / 4) + 1) + ".png", UriKind.Relative));
+			player.image.Source = new BitmapImage(new("/Images/Ninja/Idle/" + ((player.animationFrame / 4) + 1) + ".png", UriKind.Relative));
 
-			animationFrame = (animationFrame += 1) % 40;
+			player.animationFrame = (player.animationFrame += 1) % 40;
 		}
 
-		private void PlayerMovement()
+		private void MovePlayer(Player player)
 		{
 			// Move left if the left arrow key is held and/or right if the right arrow key is held
-			if(Keyboard.IsKeyDown(Key.Left))
+			if(Keyboard.IsKeyDown(player.controls.left))
 			{
-				Player.RenderTransform = new ScaleTransform(-1, 1);
-				Canvas.SetLeft(Player, Canvas.GetLeft(Player) - speed);
+				player.image.RenderTransform = new ScaleTransform(-1, 1);
+				Canvas.SetLeft(player.image, Canvas.GetLeft(player.image) - speed);
 			}
 
-			if(Keyboard.IsKeyDown(Key.Right))
+			if(Keyboard.IsKeyDown(player.controls.right))
 			{
-				Player.RenderTransform = new ScaleTransform(1, 1);
-				Canvas.SetLeft(Player, Canvas.GetLeft(Player) + speed);
+				player.image.RenderTransform = new ScaleTransform(1, 1);
+				Canvas.SetLeft(player.image, Canvas.GetLeft(player.image) + speed);
 			}
 
-			// Adds negative force if the spacebar is pressed
-			if(Keyboard.IsKeyDown(Key.Space) && onFloor)
+			// Adds negative force if the spacebar is pressed and if the player is on a floor
+			if(Keyboard.IsKeyDown(player.controls.jump) && player.onFloor)
 			{
-				gravity = -20;
-				onFloor = false;
+				player.gravity = -20;
+				player.onFloor = false;
 			}
 		}
 
-		private void PlayerGravity()
+		private void PlayerGravity(Player player)
 		{
 			// Makes the player fall down
-			lastPlayerTop = Canvas.GetTop(Player);
-			gravity++;
-			Canvas.SetTop(Player, Canvas.GetTop(Player) + gravity);
+			player.lastTop = Canvas.GetTop(player.image);
+			player.gravity++;
+			Canvas.SetTop(player.image, Canvas.GetTop(player.image) + player.gravity);
 		}
 
-		private void PlayerCollisionDetection()
+		private void PlayerCollisionDetection(Player player)
 		{
-			Rect playerRect = new(Canvas.GetLeft(Player), Canvas.GetTop(Player), Player.Width, Player.Height);
+			Rect playerRect = new(Canvas.GetLeft(player.image), Canvas.GetTop(player.image), player.image.Width, player.image.Height);
 
 			foreach(var rectangle in ObjectCanvas.Children.OfType<Rectangle>())
 			{
@@ -125,11 +173,11 @@ namespace project_arcade
 					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
 					// Don't let the player fall through a platform if the player was above or on it the previous tick
-					if(playerRect.IntersectsWith(platformRect) && lastPlayerTop + Player.Height <= Canvas.GetTop(rectangle))
+					if(playerRect.IntersectsWith(platformRect) && player.lastTop + player.image.Height <= Canvas.GetTop(rectangle))
 					{
-						gravity = 0;
-						Canvas.SetTop(Player, Canvas.GetTop(rectangle) - Player.Height);
-						onFloor = true;
+						player.gravity = 0;
+						Canvas.SetTop(player.image, Canvas.GetTop(rectangle) - player.image.Height);
+						player.onFloor = true;
 					}
 				}
 			}
@@ -174,19 +222,32 @@ namespace project_arcade
 			PauseCanvas.Visibility = Visibility.Hidden;
 		}
 
-		private void InitializeGameVariables()
+		private void InitializeGameVariables(bool multiplayer)
 		{
-			Canvas.SetTop(Player, 675);
-			Canvas.SetLeft(Player, 75);
-			gravity = 0;
+			for(int i = 0; i < players.Length; i++)
+			{
+				Canvas.SetTop(players[i].image, 675);
+				Canvas.SetLeft(players[i].image, 75 + 200 * i);
+				players[i].gravity = 0;
+				players[i].image.RenderTransform = new ScaleTransform(1, 1);
+			}
+
+			this.multiplayer = multiplayer;
+			PlayerTwo.Visibility = multiplayer ? Visibility.Visible : Visibility.Hidden;
+
 			playing = true;
 			StartCanvas.Visibility = Visibility.Hidden;
 			ObjectCanvas.Visibility = Visibility.Visible;
 		}
 
-		private void StartButton_Click(object sender, RoutedEventArgs e)
+		private void OnePlayerButton_Click(object sender, RoutedEventArgs e)
 		{
-			InitializeGameVariables();
+			InitializeGameVariables(false);
+		}
+
+		private void TwoPlayerButton_Click(object sender, RoutedEventArgs e)
+		{
+			InitializeGameVariables(true);
 		}
 
 		private void ScoresButton_Click(object sender, RoutedEventArgs e)
@@ -206,7 +267,7 @@ namespace project_arcade
 
 		private void RestartButton_Click(object sender, RoutedEventArgs e)
 		{
-			InitializeGameVariables();
+			InitializeGameVariables(multiplayer);
 			ResumeGame();
 		}
 
