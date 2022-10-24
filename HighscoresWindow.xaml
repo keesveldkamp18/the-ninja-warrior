@@ -11,21 +11,24 @@
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center">highscores</Label>
+        <Label Grid.Row="0" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">Highscores</Label>
+        <Label FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-500,79,0,0" Grid.RowSpan="2" FontWeight="Bold">Rank:</Label>
+        <Label FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,79,0,0" Grid.RowSpan="2" FontWeight="Bold">Name:</Label>
+        <Label FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="500,79,0,0" Grid.RowSpan="2" FontWeight="Bold">Score:</Label>
 
-        <ListView Name="highscoreList" ItemsSource="{Binding}" Canvas.Top="50" Canvas.Left="10" Margin="0,0,0,55" Grid.Row="1">
+        <ListView Name="highscoreList" ItemsSource="{Binding}" Canvas.Top="50" Canvas.Left="10" Margin="0,25,0,55" Grid.Row="1" Background="Transparent" BorderThickness="0" SelectionChanged="highscoreList_SelectionChanged" HorizontalAlignment="Center">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding rank}" Margin="3,0"/>
-                        <TextBlock Text="{Binding playerName}" Margin="3.0" />
-                        <TextBlock Text="{Binding playerScore}" />
-                    </StackPanel>
+                    <Grid HorizontalAlignment="Center" Width="500">
+                        <TextBlock Grid.Column="0" Text="{Binding rank}" FontSize="25" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Text="{Binding playerName}" FontSize="25" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding playerScore}" FontSize="25" HorizontalAlignment="Right"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
         <!--TODO: margins nog aanpassen zodat het er netjes uitziet-->
-        <Button Grid.Row="1" Height="40" Width="100" Margin="790,350,10,10" Click="Terug_Naar_Startscherm">back</Button>
+        <Button Grid.Row="1" Height="40" Width="100" Margin="790,350,10,10" Click="Terug_Naar_Startscherm">Back</Button>
     </Grid>
 </Window>

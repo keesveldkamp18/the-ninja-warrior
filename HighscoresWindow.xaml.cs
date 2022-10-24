@@ -36,7 +36,7 @@ namespace project_arcade
             connection.Open();
 
             //Retreive scores from DB
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM scores ORDER BY playerScore DESC LIMIT 10", connection);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM scores ORDER BY playerScore DESC LIMIT 20", connection);
 
             DataTable dt = new DataTable();
             dt.Load(cmd.ExecuteReader());
@@ -62,6 +62,11 @@ namespace project_arcade
             MainWindow gw = new MainWindow();
             gw.Visibility = Visibility.Visible;
             this.Close();
+        }
+
+        private void highscoreList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
