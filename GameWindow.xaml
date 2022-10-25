@@ -21,5 +21,7 @@
         <Rectangle Height="1" Width="1600" Tag="FloorP2" Fill="green" Canvas.Top="475" Canvas.Left="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Rectangle Name="Player1" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="575" Canvas.Left="75"/>
         <Rectangle Name="Player2" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="175" Canvas.Left="75"/>
+        <Label Name="scorePlayer1" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="10" />
+        <Label Name="scorePlayer2" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="481" HorizontalAlignment="Center" VerticalAlignment="Top" />
     </Canvas>
 </Window>

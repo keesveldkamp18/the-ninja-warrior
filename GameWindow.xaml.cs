@@ -17,8 +17,15 @@ namespace project_arcade
 		private int gravity2Player;
 		private double lastPlayer1Top;
 		private double lastPlayer2Top;
+		private double player1Score;
+		private double player2Score;
+		private double player1TimerBonus;
+		private double player2TimerBonus;
 		private bool player1OnFloor;
 		private bool player2OnFloor;
+		private bool player1IsDead;
+		private bool player2IsDead;
+		private DateTime gameStart;
 
 		public bool secondPlayer = false;
 		public UIElement Platform2;
@@ -32,6 +39,12 @@ namespace project_arcade
 			timer.Tick += GameEngine;
 			timer.Interval = TimeSpan.FromMilliseconds(20);
 			timer.Start();
+
+			player1Score = 0;
+			player2Score = 0;
+			player1IsDead = false;
+			player2IsDead = false;
+			gameStart = DateTime.Now;
 		}
 
 		private void GameEngine(object? sender, EventArgs e)
@@ -49,16 +62,21 @@ namespace project_arcade
 			CheckIfPlayerFals();
 
 			PauseChecking();
+
+			ScoreCount();
 		}
 
 		private void CheckMultiPlayer()
 		{
+
+			// Removes assets for the second player if the playes chooses to play with only 1 player
 			if(!secondPlayer)
 			{
 				gameCanvas.Children.Remove(Player2);
 				// TODO: find a better solution ???
 				gameCanvas.Children.Remove(platform1Player2);
 				gameCanvas.Children.Remove(platform2Player2);
+				gameCanvas.Children.Remove(scorePlayer2);
 			}
 		}
 
@@ -76,9 +94,10 @@ namespace project_arcade
 					// when player hits the floor the game is over ??
 					if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
 					{
+						player1IsDead = true;
 						gravity1Player = 0;
 						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
-						MessageBox.Show("Einde spel player 1");
+						MessageBox.Show("Einde spel player 1. Jou score was: " + Math.Round(player1Score + player1TimerBonus));
 					}
 				}
 
@@ -91,9 +110,10 @@ namespace project_arcade
 						// when player hits the floor the game is over ??
 						if(player2Rect.IntersectsWith(platformRect) && lastPlayer2Top + Player1.Height <= Canvas.GetTop(rectangle))
 						{
+							player2IsDead = true;
 							gravity1Player = 0;
 							Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player2.Height);
-							MessageBox.Show("Einde spel player 2");
+							MessageBox.Show("Einde spel player 2. Jou score was: " + Math.Round(player2Score + player2TimerBonus));
 						}
 					}
 				}
@@ -212,5 +232,35 @@ namespace project_arcade
 			mainWindow.Show();
 			Close();
 		}
+
+		private void ScoreCount()
+		{
+            TimeSpan duration = DateTime.Now - gameStart;
+
+            //Increasing of score
+            if (!player1IsDead)
+			{
+				player1TimerBonus = duration.TotalSeconds; 
+
+                if (Keyboard.IsKeyDown(Key.K))
+				{
+					player1Score += 10;
+				}
+
+            }
+
+            if (!player2IsDead)
+            {               
+                player2TimerBonus = duration.TotalSeconds;
+
+                if (Keyboard.IsKeyDown(Key.L))
+				{
+                    player2Score += 10;
+                }				
+            }
+
+			scorePlayer1.Content = "Score: "+ Math.Round(player1Score + player1TimerBonus);
+			scorePlayer2.Content = "Score: "+ Math.Round(player2Score + player2TimerBonus);
+        }
 	}
 }
