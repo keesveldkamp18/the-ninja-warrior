@@ -36,6 +36,10 @@
 		<None Remove="Images\Ninja\Run\8.png" />
 		<None Remove="Images\Ninja\Run\9.png" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MySql.Data" Version="8.0.31" />
+	</ItemGroup>
 	
 	<ItemGroup>
 		<Resource Include="Images\Background\1.png" />
@@ -66,4 +70,12 @@
 		<Resource Include="Images\Ninja\Run\9.png" />
 	</ItemGroup>
 
+	<!--
+	<ItemGroup>
+		<Reference Include="MySql.Data">
+			<HintPath>C:\Program Files (x86)\MySQL\MySQL Connector NET 8.0.31\Assemblies\net6.0\MySql.Data.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	-->
 </Project>
