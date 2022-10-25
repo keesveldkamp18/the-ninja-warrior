@@ -13,7 +13,6 @@ namespace project_arcade
 		#region Variables
 		private readonly DispatcherTimer timer = new();
 
-		// mijn code
 		private const int speed = 10;
 		private int gravity1Player;
 		private int gravity2Player;
@@ -24,8 +23,6 @@ namespace project_arcade
 
 		public bool secondPlayer = false;
 		public UIElement Platform2;
-
-		// ! mijn code
 
 		#endregion
 
@@ -61,8 +58,6 @@ namespace project_arcade
 
 			BackgroundParallax();
 		}
-
-		// mijn code
 
 		private void CheckMultiPlayer()
 		{
@@ -113,8 +108,6 @@ namespace project_arcade
             }
 		}
 
-		// ! mijn code
-
         private void PlayerScreenBoundsDetection()
 		{
 			// Keep the player within view
@@ -136,8 +129,6 @@ namespace project_arcade
                 Canvas.SetLeft(Player2, 1525);
             }
         }
-
-		// mijn code
 
 		private void PlayerMovement()
 		{
@@ -188,8 +179,6 @@ namespace project_arcade
             Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
         }
 
-        // !mijn code
-
         private void PlayerCollisionDetection()
 		{
 			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
@@ -231,8 +220,6 @@ namespace project_arcade
 			}
 		}
 
-		// mijn code
-
 		private void PauseChecking()
 		{
 			// If P was pressed...
@@ -247,7 +234,5 @@ namespace project_arcade
 			mainWindow.Show();
 			Close();
 		}
-
-		// ! mijn code
 	}
 }
