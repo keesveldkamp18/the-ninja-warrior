@@ -144,12 +144,12 @@ namespace project_arcade
 
             foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
             {
-                if ((string)rectangle.Tag == "Platform")
+                if ((string)rectangle.Tag == "player1")
                 {
                     Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
                     // Don't let the player fall through the platform iff the player was above or on the platform the previous tick
-                    if (playernamerect.IntersectsWith(platformRect) && lastPlayerTop + speler1naam.Height <= Canvas.GetTop(rectangle))
+                    if (playernamerect.IntersectsWith(platformRect) && LastPlayernameTop + speler1naam.Height <= Canvas.GetTop(rectangle))
                     {
                         gravity = 0;
                         Canvas.SetTop(speler1naam, Canvas.GetTop(rectangle) - speler1naam.Height);

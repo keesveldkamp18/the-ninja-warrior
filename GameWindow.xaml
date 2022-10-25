@@ -10,7 +10,7 @@
         <Button Height="20" Width="50" Focusable="False" Click="ReturnToMenuBtn">Return</Button>
         <Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="825" Canvas.Left="0"></Rectangle>
         <Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="750" Canvas.Left="950"></Rectangle>
-        <Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"></Rectangle>
-        <Rectangle x:Name="speler1naam" Width=" 75" Height="20" Canvas.Left="75" Canvas.Top="637"></Rectangle>
+        <Rectangle x:Name="Player" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75" Tag="player1"></Rectangle>
+        <Rectangle x:Name="speler1naam" Fill="Red" Width=" 75" Height="20" Canvas.Left="75" Canvas.Top="655" HorizontalAlignment="Center" VerticalAlignment="Top"></Rectangle>
     </Canvas>
 </Window>
