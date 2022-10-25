@@ -95,8 +95,71 @@ namespace project_arcade
 			{
 				Canvas.SetLeft(Player, 1525);
 			}
-			#endregion
-		}
+            #endregion
+
+			//ff testen weet niet wat ik doe. dit is voor de naam van de speler
+
+            // Horizontal movement of the player name
+            if (Keyboard.IsKeyDown(Key.Left))
+            {
+                Canvas.SetLeft(speler1naam, Canvas.GetLeft(speler1naam) - speed);
+            }
+            if (Keyboard.IsKeyDown(Key.Right))
+            {
+                Canvas.SetLeft(speler1naam, Canvas.GetLeft(speler1naam) + speed);
+            }
+
+            // Jumping for the playername
+            if (Keyboard.IsKeyDown(Key.Space) && onFloor)
+            {
+                gravity = -20;
+                onFloor = false;
+            }
+
+            if (Canvas.GetLeft(speler1naam) < 0)
+            {
+                Canvas.SetLeft(speler1naam, 0);
+            }
+            else if (Canvas.GetLeft(speler1naam) > 1525)
+            {
+                Canvas.SetLeft(speler1naam, 1525);
+            }
+
+            // Makes the player name fall down
+
+            double LastPlayernameTop;
+
+            LastPlayernameTop = Canvas.GetTop(speler1naam);
+            gravity++;
+            Canvas.SetTop(speler1naam, Canvas.GetTop(speler1naam) + gravity);
+
+			//fills the rectangle with the player name
+			ImageBrush spelernaam1 = new ImageBrush();
+			spelernaam1.ImageSource = new BitmapImage(new Uri("C:\\school\\jaar1.2\\periode_1\\programmeren\\project-arcade\\images\\speler1.png"));
+			speler1naam.Fill = spelernaam1;
+
+            //TODO; collision with player instead of the platform
+            //makes it so the playername stays above the player
+            Rect playernamerect = new(Canvas.GetLeft(speler1naam), Canvas.GetTop(speler1naam), speler1naam.Width, speler1naam.Height);
+
+            foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
+            {
+                if ((string)rectangle.Tag == "Platform")
+                {
+                    Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+
+                    // Don't let the player fall through the platform iff the player was above or on the platform the previous tick
+                    if (playernamerect.IntersectsWith(platformRect) && lastPlayerTop + speler1naam.Height <= Canvas.GetTop(rectangle))
+                    {
+                        gravity = 0;
+                        Canvas.SetTop(speler1naam, Canvas.GetTop(rectangle) - speler1naam.Height);
+                        onFloor = true;
+                    }
+                }
+            }
+
+        }
+
 
 		/// <summary>
 		/// Return to menu

@@ -19,9 +19,9 @@
                FontFamily="Arial Black">
         </Label>
         <!--TODO: margins moeten nog worden aangepast om mooi te maken-->
-        <Button Grid.Row="1" Height="40" Width="100" Margin="223,92,477,202" Click="one_player_button">1 Speler</Button>
-        <Button Grid.Row="1" Height="40" Width="100" Margin="223,193,477,101" Click="Highscores_button">Highscores</Button>
-        <Button Grid.Row="1" Height="40" Width="100" Margin="457,92,243,202" Click="two_player_button">2 Spelers</Button>
-        <Button Grid.Row="1" Height="40" Width="100" Margin="457,193,243,101" Click="Quit_button">quit</Button>
+        <Button Grid.Row="1" Height="40" Width="300" Margin="300,55,300,305" Click="one_player_button" FontSize="24">1 Speler</Button>
+        <Button Grid.Row="1" Height="40" Width="300" Margin="300,217,300,143" Click="Highscores_button" FontSize="24">Highscores</Button>
+        <Button Grid.Row="1" Height="40" Width="300" Margin="300,130,300,230" Click="two_player_button" FontSize="24">2 Spelers</Button>
+        <Button Grid.Row="1" Height="40" Width="300" Margin="300,296,300,64" Click="Quit_button" FontSize="24">quit</Button>
     </Grid>
 </Window>
