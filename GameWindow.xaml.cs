@@ -69,7 +69,6 @@ namespace project_arcade
             if (!secondPlayer)
             {
                 gameCanvas.Children.Remove(Player2);
-                // TODO: find a better solution ???
                 gameCanvas.Children.Remove(platform1Player2);
                 gameCanvas.Children.Remove(platform2Player2);
             }
