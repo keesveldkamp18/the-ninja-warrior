@@ -1,17 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static System.Windows.MessageBoxResult;
 
 namespace project_arcade
 {
+	/// <summary>
+	/// Interaction logic for GameWindow.xaml
+	/// </summary>
 	public partial class GameWindow : Window
 	{
-		#region Variables
-		private readonly DispatcherTimer timer = new();
+		DispatcherTimer timer = new DispatcherTimer();
 
 		// mijn code
 		private const int speed = 10;
@@ -33,11 +43,7 @@ namespace project_arcade
 		{
 			InitializeComponent();
 
-			InitializeGameWindow();
-		}
-
-		private void InitializeGameWindow()
-		{
+			gameCanvas.Focus();
 			timer.Tick += GameEngine;
 			timer.Interval = TimeSpan.FromMilliseconds(20);
 			timer.Start();
@@ -146,8 +152,7 @@ namespace project_arcade
 			{
 				Canvas.SetLeft(Player1, Canvas.GetLeft(Player1) - speed);
 			}
-
-			if(Keyboard.IsKeyDown(Key.Right))
+			if (Keyboard.IsKeyDown(Key.Right))
 			{
 				Canvas.SetLeft(Player1, Canvas.GetLeft(Player1) + speed);
 			}
@@ -164,6 +169,8 @@ namespace project_arcade
 
             // Adds negative force if the jump key is pressed
             if (Keyboard.IsKeyDown(Key.Up) && player1OnFloor)
+			// Jumping
+			if (Keyboard.IsKeyDown(Key.Space) && onFloor)
 			{
                 gravity1Player = -20;
                 player1OnFloor = false;
@@ -176,8 +183,7 @@ namespace project_arcade
             }
         }
 
-		private void PlayerGravity()
-		{
+			#region Player Gravity
 			// Makes the player fall down
 			lastPlayer1Top = Canvas.GetTop(Player1);
             gravity1Player++;
@@ -195,9 +201,9 @@ namespace project_arcade
 			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
 
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
-				if((string)rectangle.Tag == "Platform")
+				if ((string)rectangle.Tag == "Platform")
 				{
 					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
@@ -217,19 +223,19 @@ namespace project_arcade
 					}
 				}
 			}
-		}
+			#endregion
 
-		private void BackgroundParallax()
-		{
-			var backgroundSegments = gameCanvas.Children.OfType<Image>().Where(i => (string)i.Tag == "Background").ToArray();
-
-			// Move each segment a little left to simulate depth
-			for(int i = 0; i < backgroundSegments.Length; i++)
+			#region player screen bounds detection
+			// if the player goes too far left or right it puts them back
+			if (Canvas.GetLeft(Player) < 0)
 			{
-				var backgroundSegment = backgroundSegments[i];
-				Canvas.SetLeft(backgroundSegment, (Canvas.GetLeft(backgroundSegment) - 0.5 * (i + 1)) % 4400);
+				Canvas.SetLeft(Player, 0);
 			}
-		}
+			else if (Canvas.GetLeft(Player) > 1525)
+			{
+				Canvas.SetLeft(Player, 1525);
+			}
+			#endregion
 
 		// mijn code
 
@@ -238,16 +244,14 @@ namespace project_arcade
 			// If P was pressed...
 			if(!Keyboard.IsKeyDown(Key.P)) return;
 			const string caption = "PAUZE";
-			const string message = "Wil je stoppen met spelen?";
+			const string message = "Wil je ophouden met spelen ??";
 			const MessageBoxButton buttons = MessageBoxButton.YesNo;
-
-			// ...show a window and return to the main menu if Yes was clicked
-			if(MessageBox.Show(message, caption, buttons) != MessageBoxResult.Yes) return;
+			if (MessageBox.Show(message, caption, buttons) != Yes) return;
+			// OK code
 			MainWindow mainWindow = new();
 			mainWindow.Show();
 			Close();
+			#endregion
 		}
-
-		// ! mijn code
 	}
 }
