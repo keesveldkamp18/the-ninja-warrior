@@ -18,8 +18,7 @@
 		<Canvas Name="ObjectCanvas" Visibility="Hidden">
 			<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="825" Canvas.Left="0"/>
 			<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="750" Canvas.Left="950"/>
-			<Image Name="PlayerOne" Height="150" Width="120" Source="/Images/Ninja/Idle/1.png" Canvas.Top="675" Canvas.Left="75" RenderTransformOrigin="0.5, 0.5"/>
-			<Image Name="PlayerTwo" Height="150" Width="120" Source="/Images/Ninja/Idle/1.png" Canvas.Top="675" Canvas.Left="275" RenderTransformOrigin="0.5, 0.5"/>
+			<Image Name="Player" Height="150" Width="120" Source="/Images/Ninja/Idle/1.png" Canvas.Top="675" Canvas.Left="75" RenderTransformOrigin="0.5, 0.5"/>
 		</Canvas>
 		<Border Name="PauseCanvas" CornerRadius="25" Height="500" Width="300" Background="White" Canvas.Top="200" Canvas.Left="650" Visibility="Hidden">
 			<Canvas>
@@ -57,28 +56,21 @@
 		<Border Name="StartCanvas" CornerRadius="25" Height="500" Width="750" Background="White" Canvas.Top="200" Canvas.Left="425" Visibility="Visible">
 			<Canvas>
 				<Label FontSize="50" Width="750" Canvas.Top="50" HorizontalContentAlignment="Center" Content="The Ninja Warrior" FontFamily="Fonts/#Comfortaa"/>
-				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="175" Background="SkyBlue" Content="1 Speler" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="OnePlayerButton_Click">
+				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="175" Background="SkyBlue" Content="Start Spel" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="StartButton_Click">
 					<Button.Resources>
 						<Style TargetType="{x:Type Border}">
 							<Setter Property="CornerRadius" Value="25"/>
 						</Style>
 					</Button.Resources>
 				</Button>
-				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="250" Background="SkyBlue" Content="2 Spelers" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="TwoPlayerButton_Click">
+				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="275" Background="SkyBlue" Content="High scores" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="ScoresButton_Click" IsEnabled="False">
 					<Button.Resources>
 						<Style TargetType="{x:Type Border}">
 							<Setter Property="CornerRadius" Value="25"/>
 						</Style>
 					</Button.Resources>
 				</Button>
-				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="325" Background="SkyBlue" Content="High scores" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="ScoresButton_Click" IsEnabled="False">
-					<Button.Resources>
-						<Style TargetType="{x:Type Border}">
-							<Setter Property="CornerRadius" Value="25"/>
-						</Style>
-					</Button.Resources>
-				</Button>
-				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="400" Background="SkyBlue" Content="Spel afsluiten" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="QuitButton_Click">
+				<Button Cursor="Hand" BorderThickness="0" Focusable="False" Height="50" Width="200" Canvas.Left="275" Canvas.Top="375" Background="SkyBlue" Content="Spel afsluiten" FontFamily="Fonts/#Comfortaa" FontSize="20" Foreground="White" Click="QuitButton_Click">
 					<Button.Resources>
 						<Style TargetType="{x:Type Border}">
 							<Setter Property="CornerRadius" Value="25"/>
