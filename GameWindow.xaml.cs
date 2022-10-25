@@ -50,8 +50,6 @@ namespace project_arcade
 
 			CheckMultiPlayer();
 
-			CheckIfPlayerFals();
-
 			PauseChecking();
 
 			BackgroundParallax();
@@ -64,44 +62,6 @@ namespace project_arcade
 				gameCanvas.Children.Remove(Player2);
 				gameCanvas.Children.Remove(platform1Player2);
 				gameCanvas.Children.Remove(platform2Player2);
-			}
-		}
-
-		private void CheckIfPlayerFals()
-		{
-			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
-			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
-
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
-			{
-				if((string)rectangle.Tag == "FloorP1")
-				{
-					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
-
-					// when player hits the floor the game is over ??
-					if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
-					{
-						gravity1Player = 0;
-						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
-						MessageBox.Show("Einde spel player 1");
-					}
-				}
-
-				if(secondPlayer)
-				{
-					if((string)rectangle.Tag == "FloorP2")
-					{
-						Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
-
-						// when player hits the floor the game is over ??
-						if(player2Rect.IntersectsWith(platformRect) && lastPlayer2Top + Player1.Height <= Canvas.GetTop(rectangle))
-						{
-							gravity1Player = 0;
-							Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player2.Height);
-							MessageBox.Show("Einde spel player 2");
-						}
-					}
-				}
 			}
 		}
 
@@ -134,6 +94,7 @@ namespace project_arcade
 			{
 				Canvas.SetLeft(Player1, Canvas.GetLeft(Player1) - speed);
 			}
+
 			if(Keyboard.IsKeyDown(Key.Right))
 			{
 				Canvas.SetLeft(Player1, Canvas.GetLeft(Player1) + speed);
@@ -148,7 +109,6 @@ namespace project_arcade
 			{
 				Canvas.SetLeft(Player2, Canvas.GetLeft(Player2) + speed);
 			}
-
 
 			// Adds negative force if the jump key is pressed
 			if(Keyboard.IsKeyDown(Key.Up) && player1OnFloor)
@@ -171,65 +131,65 @@ namespace project_arcade
 			gravity1Player++;
 			Canvas.SetTop(Player1, Canvas.GetTop(Player1) + gravity1Player);
 
-				lastPlayer2Top = Canvas.GetTop(Player2);
-				gravity2Player++;
-				Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
-			}
+			lastPlayer2Top = Canvas.GetTop(Player2);
+			gravity2Player++;
+			Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
+		}
 
-			private void PlayerCollisionDetection()
+		private void PlayerCollisionDetection()
+		{
+			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
+			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
+
+			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
-				Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
-				Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
-
-				foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
+				if((string)rectangle.Tag == "Platform")
 				{
-					if((string)rectangle.Tag == "Platform")
+					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+
+					// Don't let the player fall through a platform if the player was above or on it the previous tick
+					if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
 					{
-						Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+						gravity1Player = 0;
+						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
+						player1OnFloor = true;
+					}
 
-						// Don't let the player fall through a platform if the player was above or on it the previous tick
-						if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
-						{
-							gravity1Player = 0;
-							Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
-							player1OnFloor = true;
-						}
-
-						if(player2Rect.IntersectsWith(platformRect) && lastPlayer2Top + Player2.Height <= Canvas.GetTop(rectangle))
-						{
-							gravity2Player = 0;
-							Canvas.SetTop(Player2, Canvas.GetTop(rectangle) - Player2.Height);
-							player2OnFloor = true;
-						}
+					if(player2Rect.IntersectsWith(platformRect) && lastPlayer2Top + Player2.Height <= Canvas.GetTop(rectangle))
+					{
+						gravity2Player = 0;
+						Canvas.SetTop(Player2, Canvas.GetTop(rectangle) - Player2.Height);
+						player2OnFloor = true;
 					}
 				}
 			}
+		}
 
-			private void BackgroundParallax()
+		private void BackgroundParallax()
+		{
+			var backgroundSegments = gameCanvas.Children.OfType<Image>().Where(i => (string)i.Tag == "Background").ToArray();
+
+			// Move each segment a little to the left to simulate depth
+			for(int i = 0; i < backgroundSegments.Length; i++)
 			{
-				var backgroundSegments = gameCanvas.Children.OfType<Image>().Where(i => (string)i.Tag == "Background").ToArray();
-
-				// Move each segment a little left to simulate depth
-				for(int i = 0; i < backgroundSegments.Length; i++)
-				{
-					var backgroundSegment = backgroundSegments[i];
-					Canvas.SetLeft(backgroundSegment, (Canvas.GetLeft(backgroundSegment) - 0.5 * (i + 1)) % 4400);
-				}
-			}
-
-			private void PauseChecking()
-			{
-				// If P was pressed...
-				if(!Keyboard.IsKeyDown(Key.P)) return;
-				const string caption = "PAUZE";
-				const string message = "Wil je stoppen met spelen?";
-				const MessageBoxButton buttons = MessageBoxButton.YesNo;
-
-				// ...show a window and return to the main menu if Yes was clicked
-				if(MessageBox.Show(message, caption, buttons) != MessageBoxResult.Yes) return;
-				MainWindow mainWindow = new();
-				mainWindow.Show();
-				Close();
+				var backgroundSegment = backgroundSegments[i];
+				Canvas.SetLeft(backgroundSegment, (Canvas.GetLeft(backgroundSegment) - 0.5 * (i + 1)) % 4400);
 			}
 		}
+
+		private void PauseChecking()
+		{
+			// If Escape was pressed...
+			if(!Keyboard.IsKeyDown(Key.Escape)) return;
+			const string caption = "PAUZE";
+			const string message = "Wil je stoppen met spelen?";
+			const MessageBoxButton buttons = MessageBoxButton.YesNo;
+
+			// ...show a window and return to the main menu if Yes was clicked
+			if(MessageBox.Show(message, caption, buttons) != MessageBoxResult.Yes) return;
+			MainWindow mainWindow = new();
+			mainWindow.Show();
+			Close();
+		}
 	}
+}
