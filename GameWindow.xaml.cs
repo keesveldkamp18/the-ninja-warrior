@@ -33,9 +33,9 @@ namespace project_arcade
 
 		private void InitializeGameWindow()
 		{
-			timer.Tick += GameEngine;
-			timer.Interval = TimeSpan.FromMilliseconds(20);
-			timer.Start();
+			SetUpGameEngine();
+
+			CheckMultiplayer();
 		}
 
 		private void GameEngine(object? sender, EventArgs e)
@@ -48,14 +48,19 @@ namespace project_arcade
 
 			PlayerScreenBoundsDetection();
 
-			CheckMultiPlayer();
-
 			PauseChecking();
 
 			BackgroundParallax();
 		}
 
-		private void CheckMultiPlayer()
+		private void SetUpGameEngine()
+		{
+			timer.Tick += GameEngine;
+			timer.Interval = TimeSpan.FromMilliseconds(20);
+			timer.Start();
+		}
+
+		private void CheckMultiplayer()
 		{
 			if(!secondPlayer)
 			{
