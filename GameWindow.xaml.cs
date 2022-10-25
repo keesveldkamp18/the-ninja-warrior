@@ -139,6 +139,16 @@ namespace project_arcade
 			lastPlayer2Top = Canvas.GetTop(Player2);
 			gravity2Player++;
 			Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
+
+			if(Canvas.GetTop(Player1) >= 750)
+			{
+				MessageBox.Show("Einde spel player 1");
+			}
+
+			if(Canvas.GetTop(Player2) >= 325)
+			{
+				MessageBox.Show("Einde spel player 1");
+			}
 		}
 
 		private void PlayerCollisionDetection()
