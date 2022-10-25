@@ -30,5 +30,13 @@ namespace project_arcade
             gw.Visibility = Visibility.Visible;
             this.Close();
         }
+
+        private void TwoPlayerToGame(object sender, RoutedEventArgs e)
+        {
+            GameWindow gw = new GameWindow();
+            gw.secondPlayer = true;
+            gw.Visibility = Visibility.Visible;
+            this.Close();
+        }
     }
 }
