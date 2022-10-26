@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -6,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace project_arcade
 {
@@ -286,7 +288,7 @@ namespace project_arcade
 					{
                         if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n" + "Player 2 score: " + Math.Round(player2Score + player2TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-                            //TODO: submit score
+							SubmitScore();
 
                             MainWindow mw = new MainWindow();
                             mw.Visibility = Visibility.Visible;
@@ -312,7 +314,7 @@ namespace project_arcade
                     {
                         if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-                            //TODO: submit score
+							SubmitScore();
 
                             MainWindow mw = new MainWindow();
                             mw.Visibility = Visibility.Visible;
@@ -334,7 +336,36 @@ namespace project_arcade
 
 		private void SubmitScore()
 		{
+            //might need to download and reference the connector. Download: https://dev.mysql.com/downloads/connector/net/ 
+            string connectionString = "SERVER=web0113.zxcs.nl,3306; DATABASE=u45926p46412_highscore; UID=u45926p46412_highscore; PASSWORD=ninjaEndlessRunner;";
 
-		}
+            //Connect to DB
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            //open connection
+            connection.Open();
+
+            //Add score to DB
+            MySqlCommand addScore = new MySqlCommand();
+
+			//Submit player 1 score
+            addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES ('Player 1', @score)";
+            addScore.Parameters.AddWithValue("@score", Math.Round(player1Score + player1TimerBonus));
+            addScore.Connection = connection;
+            addScore.ExecuteNonQuery();
+
+			//Submit player 2 score
+            if (secondPlayer)
+			{
+                addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES ('Player 2', @score2)";
+                addScore.Parameters.AddWithValue("@score2", Math.Round(player2Score + player2TimerBonus));
+                addScore.Connection = connection;
+                addScore.ExecuteNonQuery();
+            }
+               
+            //close connection
+            connection.Close();
+
+        }
 	}
 }
