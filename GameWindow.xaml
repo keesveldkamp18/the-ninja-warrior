@@ -19,8 +19,6 @@
         <Rectangle Name="platform2Player2" Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="300" Canvas.Left="950"/>
         <Rectangle Height="1" Width="1600" Tag="FloorP1" Fill="green" Canvas.Top="900" Canvas.Left="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle Height="1" Width="1600" Tag="FloorP2" Fill="green" Canvas.Top="475" Canvas.Left="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <!--<Rectangle Name="Player1" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="575" Canvas.Left="75"/>
-        <Rectangle Name="Player2" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="175" Canvas.Left="75"/>-->
         <Canvas Name="Player1" Height="180" Width="75" Canvas.Top="575" Canvas.Left="75">
             <Label Width="75" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="white">speler 1</Label>
             <Image Width="75" Height="150" Source="Images\Ninja\Idle\1.png" HorizontalAlignment="Center" Canvas.Top="30" VerticalAlignment="Top"></Image>

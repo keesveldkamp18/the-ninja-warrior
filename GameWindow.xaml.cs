@@ -30,8 +30,6 @@ namespace project_arcade
 		private bool player2IsDead;
 		private DateTime gameStart;
 		private bool endGame = false;
-		private double LastName1Top;
-		private double LastName2Top;
 
 		public bool secondPlayer = false;
 		public UIElement Platform2;
@@ -72,8 +70,6 @@ namespace project_arcade
 			ScoreCount();
 
 			CheckPlayerDeath();
-
-			//NameMovement();
 		}
 
 		private void CheckMultiPlayer()
@@ -185,23 +181,6 @@ namespace project_arcade
 				player2OnFloor = false;
 			}
 		}
-
-		//private void NameMovement()
-		//{
-		//	LastName1Top = Canvas.GetTop(Player1);
-		//	Canvas.SetTop(NamePlayer1, Canvas.GetTop(NamePlayer1) + gravity1Player);
-		//	if (player1OnFloor == true)
-		//	{
-		//		gravity1Player = 0;
-		//	}
-
-  //          LastName2Top = Canvas.GetTop(Player2);
-  //          Canvas.SetTop(Nameplayer2, Canvas.GetTop(Nameplayer2) + gravity2Player);
-  //          if (player2OnFloor == true)
-  //          {
-  //              gravity2Player  = 0;
-  //          }
-  //      }
 
 		// Makes the player fall down
 		private void PlayerGravity()
