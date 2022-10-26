@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project_arcade"
         mc:Ignorable="d"
-        Title="_1spelerkeuze" Height="500" Width="900" WindowState="Maximized" WindowStyle="None">
-    <Grid>
-        <Button Height="50" Width="60" Margin="698,352,42,32" Click="OnePlayerToMain">back</Button>
-        <Button Height="50" Width="60" Margin="370,347,370,37" Click="OnePlayerToGame">play</Button>
-    </Grid>
+        Title="The Ninja Warrior" Height="900" Width="1600" WindowState="Maximized" WindowStyle="None">
+	<Grid>
+		<Button Height="40" Width="100" Margin="0, 0, 250, 50" Click="OnePlayerToGame">Start</Button>
+		<Button Height="40" Width="100" Margin="250, 0, 0, 50" Click="OnePlayerToMain">Terug</Button>
+	</Grid>
 </Window>
