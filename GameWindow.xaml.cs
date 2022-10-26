@@ -30,6 +30,12 @@ namespace project_arcade
 		private bool player2IsDead;
 		private DateTime gameStart;
 		private bool endGame = false;
+		private bool Name1OnPlayer1;
+		private bool Name2OnPlayer2;
+		private int GravityName1;
+		private int GravityName2;
+		private double LastName1Top;
+		private double LastName2Top;
 
 		public bool secondPlayer = false;
 		public UIElement Platform2;
@@ -70,6 +76,10 @@ namespace project_arcade
 			ScoreCount();
 
 			CheckPlayerDeath();
+
+			NameMovement();
+
+			NameGravity();
 		}
 
 		private void CheckMultiPlayer()
@@ -182,6 +192,43 @@ namespace project_arcade
 			}
 		}
 
+		//makes the name above the player move
+		private void NameMovement()
+		{
+            // Move left if the left arrow key is held and/or right if the right arrow key is held
+            if (Keyboard.IsKeyDown(Key.Left))
+            {
+                Canvas.SetLeft(PlayerName1, Canvas.GetLeft(PlayerName1) - speed);
+            }
+            if (Keyboard.IsKeyDown(Key.Right))
+            {
+                Canvas.SetLeft(PlayerName1, Canvas.GetLeft(PlayerName1) + speed);
+            }
+
+            if (Keyboard.IsKeyDown(Key.A))
+            {
+                Canvas.SetLeft(PlayerName2, Canvas.GetLeft(PlayerName2) - speed);
+            }
+
+            if (Keyboard.IsKeyDown(Key.D))
+            {
+                Canvas.SetLeft(PlayerName2, Canvas.GetLeft(PlayerName2) + speed);
+            }
+
+            // Adds negative force if the jump key is pressed
+            if (Keyboard.IsKeyDown(Key.Up) && Name1OnPlayer1)
+            {
+                GravityName1 = -20;
+                player1OnFloor = false;
+            }
+
+            if (Keyboard.IsKeyDown(Key.W) && Name2OnPlayer2)
+            {
+                GravityName2 = -20;
+                player2OnFloor = false;
+            }
+        }
+
 		// Makes the player fall down
 		private void PlayerGravity()
 		{
@@ -193,6 +240,18 @@ namespace project_arcade
 			gravity2Player++;
 			Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
 		}
+
+		//makes the name fall down
+		private void NameGravity()
+		{
+            LastName1Top = Canvas.GetTop(PlayerName1);
+            GravityName1++;
+            Canvas.SetTop(PlayerName1, Canvas.GetTop(PlayerName1) + GravityName1);
+
+            LastName2Top = Canvas.GetTop(PlayerName2);
+            GravityName2++;
+            Canvas.SetTop(PlayerName2, Canvas.GetTop(PlayerName2) + GravityName2);
+        }
 
 		private void PlayerCollisionDetection()
 		{

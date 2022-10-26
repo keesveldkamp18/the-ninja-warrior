@@ -23,5 +23,15 @@
         <Rectangle Name="Player2" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="175" Canvas.Left="75"/>
         <Label Name="scorePlayer1" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="10" />
         <Label Name="scorePlayer2" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="481" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Rectangle Name="PlayerName1" Tag="NameAbovePlayer1" Width="75" Height="20" Canvas.Left="75" Canvas.Top="555">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Images/Ninja/Name/speler1.png"></ImageBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle Name="PlayerName2" Tag="NameAbovePlayer2" Width="75" Height="20" Canvas.Left="75" Canvas.Top="155" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="Images/Ninja/Name/speler2.png"></ImageBrush>
+            </Rectangle.Fill>
+        </Rectangle>
     </Canvas>
 </Window>
