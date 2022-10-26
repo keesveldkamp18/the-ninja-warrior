@@ -30,10 +30,6 @@ namespace project_arcade
 		private bool player2IsDead;
 		private DateTime gameStart;
 		private bool endGame = false;
-		private bool Name1OnPlayer1;
-		private bool Name2OnPlayer2;
-		private int GravityName1;
-		private int GravityName2;
 		private double LastName1Top;
 		private double LastName2Top;
 
@@ -77,9 +73,7 @@ namespace project_arcade
 
 			CheckPlayerDeath();
 
-			NameMovement();
-
-			NameGravity();
+			//NameMovement();
 		}
 
 		private void CheckMultiPlayer()
@@ -192,42 +186,22 @@ namespace project_arcade
 			}
 		}
 
-		//makes the name above the player move
-		private void NameMovement()
-		{
-            // Move left if the left arrow key is held and/or right if the right arrow key is held
-            if (Keyboard.IsKeyDown(Key.Left))
-            {
-                Canvas.SetLeft(PlayerName1, Canvas.GetLeft(PlayerName1) - speed);
-            }
-            if (Keyboard.IsKeyDown(Key.Right))
-            {
-                Canvas.SetLeft(PlayerName1, Canvas.GetLeft(PlayerName1) + speed);
-            }
+		//private void NameMovement()
+		//{
+		//	LastName1Top = Canvas.GetTop(Player1);
+		//	Canvas.SetTop(NamePlayer1, Canvas.GetTop(NamePlayer1) + gravity1Player);
+		//	if (player1OnFloor == true)
+		//	{
+		//		gravity1Player = 0;
+		//	}
 
-            if (Keyboard.IsKeyDown(Key.A))
-            {
-                Canvas.SetLeft(PlayerName2, Canvas.GetLeft(PlayerName2) - speed);
-            }
-
-            if (Keyboard.IsKeyDown(Key.D))
-            {
-                Canvas.SetLeft(PlayerName2, Canvas.GetLeft(PlayerName2) + speed);
-            }
-
-            // Adds negative force if the jump key is pressed
-            if (Keyboard.IsKeyDown(Key.Up) && Name1OnPlayer1)
-            {
-                GravityName1 = -20;
-                player1OnFloor = false;
-            }
-
-            if (Keyboard.IsKeyDown(Key.W) && Name2OnPlayer2)
-            {
-                GravityName2 = -20;
-                player2OnFloor = false;
-            }
-        }
+  //          LastName2Top = Canvas.GetTop(Player2);
+  //          Canvas.SetTop(Nameplayer2, Canvas.GetTop(Nameplayer2) + gravity2Player);
+  //          if (player2OnFloor == true)
+  //          {
+  //              gravity2Player  = 0;
+  //          }
+  //      }
 
 		// Makes the player fall down
 		private void PlayerGravity()
@@ -241,31 +215,19 @@ namespace project_arcade
 			Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
 		}
 
-		//makes the name fall down
-		private void NameGravity()
-		{
-            LastName1Top = Canvas.GetTop(PlayerName1);
-            GravityName1++;
-            Canvas.SetTop(PlayerName1, Canvas.GetTop(PlayerName1) + GravityName1);
-
-            LastName2Top = Canvas.GetTop(PlayerName2);
-            GravityName2++;
-            Canvas.SetTop(PlayerName2, Canvas.GetTop(PlayerName2) + GravityName2);
-        }
-
 		private void PlayerCollisionDetection()
 		{
 			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
 
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
-				if((string)rectangle.Tag == "Platform")
+				if ((string)rectangle.Tag == "Platform")
 				{
 					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
 					// Don't let the player fall through a platform if the player was above or on it the previous tick
-					if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
+					if (player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
 					{
 						gravity1Player = 0;
 						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
@@ -281,6 +243,7 @@ namespace project_arcade
 				}
 			}
 		}
+
 
 		private void PauseChecking()
 		{

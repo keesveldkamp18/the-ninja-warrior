@@ -14,6 +14,7 @@
 		<None Remove="Images\Background\3.png" />
 		<None Remove="Images\Background\4.png" />
 		<None Remove="Images\Background\5.png" />
+		<None Remove="Images\Ninja\Idle\1.png" />
 		<None Remove="Images\Ninja\Jump\1.png" />
 		<None Remove="Images\Ninja\Jump\10.png" />
 		<None Remove="Images\Ninja\Jump\2.png" />
@@ -40,6 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Images\Ninja\Idle\1.png" />
 	  <Resource Include="Images\Ninja\Name\speler1.png" />
 	</ItemGroup>
 
