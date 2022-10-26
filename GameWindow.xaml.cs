@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace project_arcade
 {
@@ -134,13 +135,15 @@ namespace project_arcade
             Canvas.SetTop(speler1naam, Canvas.GetTop(speler1naam) + gravity);
 
 			//fills the rectangle with the player name
-			ImageBrush spelernaam1 = new ImageBrush();
-			spelernaam1.ImageSource = new BitmapImage(new Uri("C:\\school\\jaar1.2\\periode_1\\programmeren\\project-arcade\\images\\speler1.png"));
-			speler1naam.Fill = spelernaam1;
+			//ImageBrush spelernaam1 = new ImageBrush();
+			//spelernaam1.ImageSource = new BitmapImage(new Uri("pack://application:,,,/project-arcade;component/speler1.png"));
+			//speler1naam.Fill = spelernaam1;
 
-            //TODO; collision with player instead of the platform
-            //makes it so the playername stays above the player
-            Rect playernamerect = new(Canvas.GetLeft(speler1naam), Canvas.GetTop(speler1naam), speler1naam.Width, speler1naam.Height);
+
+
+			//TODO; collision with player instead of the platform
+			//makes it so the playername stays above the player
+			Rect playernamerect = new(Canvas.GetLeft(speler1naam), Canvas.GetTop(speler1naam), speler1naam.Width, speler1naam.Height);
 
             foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
             {
@@ -160,7 +163,7 @@ namespace project_arcade
 
         }
 
-
+		
 		/// <summary>
 		/// Return to menu
 		/// </summary>
