@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,6 +27,7 @@ namespace project_arcade
 		private bool player1IsDead;
 		private bool player2IsDead;
 		private DateTime gameStart;
+		private bool endGame = false;
 
 		public bool secondPlayer = false;
 		public UIElement Platform2;
@@ -64,6 +66,8 @@ namespace project_arcade
 			PauseChecking();
 
 			ScoreCount();
+
+			CheckPlayerDeath();
 		}
 
 		private void CheckMultiPlayer()
@@ -96,8 +100,7 @@ namespace project_arcade
 					{
 						player1IsDead = true;
 						gravity1Player = 0;
-						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
-						MessageBox.Show("Einde spel player 1. Jou score was: " + Math.Round(player1Score + player1TimerBonus));
+						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);					
 					}
 				}
 
@@ -112,8 +115,7 @@ namespace project_arcade
 						{
 							player2IsDead = true;
 							gravity1Player = 0;
-							Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player2.Height);
-							MessageBox.Show("Einde spel player 2. Jou score was: " + Math.Round(player2Score + player2TimerBonus));
+							Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player2.Height);							
 						}
 					}
 				}
@@ -262,5 +264,77 @@ namespace project_arcade
 			scorePlayer1.Content = "Score: "+ Math.Round(player1Score + player1TimerBonus);
 			scorePlayer2.Content = "Score: "+ Math.Round(player2Score + player2TimerBonus);
         }
+
+		private void CheckPlayerDeath()
+		{
+			if (secondPlayer)
+			{
+                if (player1IsDead)
+                {
+                    gameCanvas.Children.Remove(Player1);
+                    
+                }
+
+                if (player2IsDead)
+                {
+                    gameCanvas.Children.Remove(Player2);                
+                }
+
+				if (player1IsDead && player2IsDead)
+				{
+					if (!endGame)
+					{
+                        if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n" + "Player 2 score: " + Math.Round(player2Score + player2TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            //TODO: submit score
+
+                            MainWindow mw = new MainWindow();
+                            mw.Visibility = Visibility.Visible;
+                            this.Close();
+                        }
+                        else
+                        {
+                            MainWindow mw = new MainWindow();
+                            mw.Show();
+                            this.Close();
+                        };
+
+                        endGame = true;
+                    }
+                    
+                }
+            }
+			else
+			{
+                if (player1IsDead)
+                {
+                    if (!endGame)
+                    {
+                        if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            //TODO: submit score
+
+                            MainWindow mw = new MainWindow();
+                            mw.Visibility = Visibility.Visible;
+                            this.Close();
+                        }
+                        else
+                        {
+                            MainWindow mw = new MainWindow();
+                            mw.Show();
+                            this.Close();
+                        };
+
+                        endGame = true;
+                    }
+
+                }              
+            }			
+        }
+
+		private void SubmitScore()
+		{
+
+		}
 	}
 }
