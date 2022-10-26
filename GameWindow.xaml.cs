@@ -304,8 +304,32 @@ namespace project_arcade
                     
                 }
             }
-			
+			else
+			{
+                if (player1IsDead)
+                {
+                    if (!endGame)
+                    {
+                        if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            //TODO: submit score
 
+                            MainWindow mw = new MainWindow();
+                            mw.Visibility = Visibility.Visible;
+                            this.Close();
+                        }
+                        else
+                        {
+                            MainWindow mw = new MainWindow();
+                            mw.Show();
+                            this.Close();
+                        };
+
+                        endGame = true;
+                    }
+
+                }              
+            }			
         }
 
 		private void SubmitScore()
