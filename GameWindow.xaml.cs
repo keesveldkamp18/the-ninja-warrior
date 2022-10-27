@@ -1,13 +1,11 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace project_arcade
 {
@@ -229,7 +227,7 @@ namespace project_arcade
 			Rect player1Rect = new(Canvas.GetLeft(player1), Canvas.GetTop(player1), player1.Width, player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(player2), Canvas.GetTop(player2), player2.Width, player2.Height);
 
-			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
 				if((string)rectangle.Tag == "floorPlayer1")
 				{
