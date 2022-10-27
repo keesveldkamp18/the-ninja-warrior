@@ -184,23 +184,23 @@ namespace project_arcade
 			Rect player1Rect = new(Canvas.GetLeft(player1), Canvas.GetTop(player1), player1.Width, player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(player2), Canvas.GetTop(player2), player2.Width, player2.Height);
 
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>().Where(p => (string)p.Tag == "Platform"))
+			foreach(var platform in gameCanvas.Children.OfType<Image>().Where(p => (string)p.Tag == "Platform"))
 			{
-				Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+				Rect platformRect = new(Canvas.GetLeft(platform), Canvas.GetTop(platform), 500, 75);
 
 				// Don't let the player fall through a platform if the player was above or on it the previous tick
-				if(player1Rect.IntersectsWith(platformRect) && lastTopPlayer1 + player1.Height <= Canvas.GetTop(rectangle))
+				if(player1Rect.IntersectsWith(platformRect) && lastTopPlayer1 + player1.Height <= Canvas.GetTop(platform))
 				{
 					gravityPlayer1 = 0;
-					Canvas.SetTop(player1, Canvas.GetTop(rectangle) - player1.Height);
+					Canvas.SetTop(player1, Canvas.GetTop(platform) - player1.Height);
 					onFloorPlayer1 = true;
 					canJumpPlayer1 = true;
 				}
 
-				if(player2Rect.IntersectsWith(platformRect) && lastTopPlayer2 + player2.Height <= Canvas.GetTop(rectangle))
+				if(player2Rect.IntersectsWith(platformRect) && lastTopPlayer2 + player2.Height <= Canvas.GetTop(platform))
 				{
 					gravityPlayer2 = 0;
-					Canvas.SetTop(player2, Canvas.GetTop(rectangle) - player2.Height);
+					Canvas.SetTop(player2, Canvas.GetTop(platform) - player2.Height);
 					onFloorPlayer2 = true;
 					canJumpPlayer2 = true;
 				}
@@ -377,7 +377,7 @@ namespace project_arcade
 
 		private void MovePlatforms()
 		{
-			foreach(var platform in gameCanvas.Children.OfType<Rectangle>().Where(p => (string)p.Tag == "Platform"))
+			foreach(var platform in gameCanvas.Children.OfType<Image>().Where(p => (string)p.Tag == "Platform"))
 			{
 				Canvas.SetLeft(platform, Canvas.GetLeft(platform) - platformSpeed);
 

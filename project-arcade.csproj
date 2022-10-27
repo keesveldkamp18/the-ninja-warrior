@@ -18,6 +18,7 @@
 		<None Remove="Images\Background\3.png" />
 		<None Remove="Images\Background\4.png" />
 		<None Remove="Images\Background\5.png" />
+		<None Remove="Images\House.png" />
 		<None Remove="Images\Ninja\Idle\0.png" />
 		<None Remove="Images\Ninja\Idle\1.png" />
 		<None Remove="Images\Ninja\Idle\2.png" />
@@ -49,6 +50,7 @@
 		<None Remove="Images\Ninja\Run\7.png" />
 		<None Remove="Images\Ninja\Run\8.png" />
 		<None Remove="Images\Ninja\Run\9.png" />
+		<None Remove="Images\Roof.png" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -57,6 +59,7 @@
 		<Resource Include="Images\Background\3.png" />
 		<Resource Include="Images\Background\4.png" />
 		<Resource Include="Images\Background\5.png" />
+		<Resource Include="Images\House.png" />
 		<Resource Include="Images\Ninja\Idle\0.png" />
 		<Resource Include="Images\Ninja\Idle\1.png" />
 		<Resource Include="Images\Ninja\Idle\2.png" />
@@ -77,7 +80,6 @@
 		<Resource Include="Images\Ninja\Jump\7.png" />
 		<Resource Include="Images\Ninja\Jump\8.png" />
 		<Resource Include="Images\Ninja\Jump\9.png" />
-		<Resource Include="Images\Ninja\Kunai.png" />
 		<Resource Include="Images\Ninja\Run\0.png" />
 		<Resource Include="Images\Ninja\Run\1.png" />
 		<Resource Include="Images\Ninja\Run\2.png" />
@@ -88,6 +90,7 @@
 		<Resource Include="Images\Ninja\Run\7.png" />
 		<Resource Include="Images\Ninja\Run\8.png" />
 		<Resource Include="Images\Ninja\Run\9.png" />
+		<Resource Include="Images\Roof.png" />
 	</ItemGroup>
 
 </Project>
