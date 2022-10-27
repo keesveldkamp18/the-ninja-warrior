@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.VisualBasic;
+using MySql.Data.MySqlClient;
 using System;
 using System.Linq;
 using System.Threading;
@@ -15,8 +16,6 @@ namespace project_arcade
 	{
 		DispatcherTimer timer = new DispatcherTimer();
 
-        #region global variables
-        private const int speed = 10;
 		private DateTime gameStart;
 		private bool endGame = false;
 
@@ -33,6 +32,8 @@ namespace project_arcade
         private bool player2OnFloor;
         private bool player1IsDead;
         private bool player2IsDead;
+        private string player1Name;
+		    private string player2Name;
         public bool secondPlayer = false;
         #endregion
 
@@ -311,7 +312,9 @@ namespace project_arcade
 					{
                         if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n" + "Player 2 score: " + Math.Round(player2Score + player2TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-							SubmitScore();
+							player1Name = Interaction.InputBox("Please enter the name of Player 1.", "Enter name", "Player 1");
+                            player2Name = Interaction.InputBox("Please enter the name of Player 2.", "Enter name", "Player 2");
+                            SubmitScore();
 
                             MainWindow mw = new MainWindow();
                             mw.Visibility = Visibility.Visible;
@@ -337,7 +340,8 @@ namespace project_arcade
                     {
                         if (MessageBox.Show("Player 1 score: " + Math.Round(player1Score + player1TimerBonus) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-							SubmitScore();
+                            player1Name = Interaction.InputBox("Please enter the name of Player 1.", "Enter name", "Player 1");
+                            SubmitScore();
 
                             MainWindow mw = new MainWindow();
                             mw.Visibility = Visibility.Visible;
@@ -372,16 +376,18 @@ namespace project_arcade
             MySqlCommand addScore = new MySqlCommand();
 
 			//Submit player 1 score
-            addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES ('Player 1', @score)";
+            addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES (@player1name, @score)";
             addScore.Parameters.AddWithValue("@score", Math.Round(player1Score + player1TimerBonus));
+            addScore.Parameters.AddWithValue("@player1name", player1Name);
             addScore.Connection = connection;
             addScore.ExecuteNonQuery();
 
 			//Submit player 2 score
             if (secondPlayer)
 			{
-                addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES ('Player 2', @score2)";
+                addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES (@player2name, @score2)";
                 addScore.Parameters.AddWithValue("@score2", Math.Round(player2Score + player2TimerBonus));
+                addScore.Parameters.AddWithValue("@player2name", player2Name);
                 addScore.Connection = connection;
                 addScore.ExecuteNonQuery();
             }
