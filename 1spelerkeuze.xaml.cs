@@ -33,7 +33,7 @@ namespace project_arcade
 
         private void OnePlayerToGame(object sender, RoutedEventArgs e)
         {
-            GameWindow gw = new GameWindow();
+            GameWindow gw = new GameWindow(false);
             gw.Visibility = Visibility.Visible;
             this.Close();
         }
