@@ -30,7 +30,7 @@ namespace project_arcade
 		private bool canJumpPlayer2;
 		private string player1Name;
 		private string player2Name;
-    #endregion
+		#endregion
 
 		private DispatcherTimer timer = new DispatcherTimer();
 		private DateTime gameStartTime;
