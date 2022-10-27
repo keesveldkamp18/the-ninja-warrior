@@ -12,11 +12,11 @@
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 
-		<Label Grid.Row="0" Content="The Ninja Warrior" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontFamily="Arial Black"/>
+		<Label Grid.Row="0" Content="The Ninja Warrior" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" FontFamily="Arial Black"/>
 
-		<Button Grid.Row="1" Height="40" Width="100" Margin="0, 0, 250, 150" Click="One_player_button">1 Speler</Button>
-		<Button Grid.Row="1" Height="40" Width="100" Margin="250, 0, 0, 150" Click="Two_player_button">2 Spelers</Button>
-		<Button Grid.Row="1" Height="40" Width="100" Margin="0, 150, 250, 0" Click="Highscores_button">High Scores</Button>
-		<Button Grid.Row="1" Height="40" Width="100" Margin="250, 150, 0, 0" Click="Quit_button">Afsluiten</Button>
+		<Button Grid.Row="1" Height="100" Width="300" Margin="0, 0, 400, 200" Click="One_player_button" FontSize="48" FontWeight="Bold">1 Speler</Button>
+		<Button Grid.Row="1" Height="100" Width="300" Margin="400, 0, 0, 200" Click="Two_player_button" FontSize="48" FontWeight="Bold">2 Spelers</Button>
+		<Button Grid.Row="1" Height="100" Width="300" Margin="0, 200, 400, 0" Click="Highscores_button" FontSize="48" FontWeight="Bold">High Scores</Button>
+		<Button Grid.Row="1" Height="100" Width="300" Margin="400, 200, 0, 0" Click="Quit_button" FontSize="48" FontWeight="Bold">Afsluiten</Button>
 	</Grid>
 </Window>

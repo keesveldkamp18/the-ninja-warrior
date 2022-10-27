@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="The Ninja Warrior" Height="900" Width="1600" WindowState="Maximized" WindowStyle="None">
 	<Grid>
-		<Button Height="40" Width="100" Margin="0, 0, 250, 50" Click="OnePlayerToGame">Start</Button>
-		<Button Height="40" Width="100" Margin="250, 0, 0, 50" Click="OnePlayerToMain">Terug</Button>
+		<Button Height="100" Width="300" Margin="0, 0, 400, 100" Click="OnePlayerToGame" FontSize="48" FontWeight="Bold">Start</Button>
+		<Button Height="100" Width="300" Margin="400, 0, 0, 100" Click="OnePlayerToMain" FontSize="48" FontWeight="Bold">Terug</Button>
 	</Grid>
 </Window>
