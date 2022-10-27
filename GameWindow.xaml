@@ -26,11 +26,14 @@
 		<Rectangle Name="platform2Player2" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="300" Canvas.Left="800"/>
 		<Rectangle Name="platform3Player2" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="225" Canvas.Left="1600"/>
 
-		<Canvas Name="player1" Height="150" Width="75" Canvas.Top="675" Background="CornflowerBlue" Canvas.Left="75">
-			<Label Width="75" Height="30" HorizontalContentAlignment="Center" FontSize="16" Canvas.Top="-30" Foreground="white">Speler 1</Label>
+		<Canvas Name="player1" Height="150" Width="80" Canvas.Top="675" Canvas.Left="75">
+			<Label Width="80" Height="30" HorizontalContentAlignment="Center" FontSize="16" Canvas.Top="-30" Foreground="White">Speler 1</Label>
+			<Image Height="150" Source="Images/Ninja/Idle/1.png" RenderTransformOrigin="0.5, 0.5"/>
 		</Canvas>
-		<Canvas Name="player2" Height="150" Width="75" Canvas.Top="225" Background="CornflowerBlue" Canvas.Left="75">
-			<Label Width="75" Height="30" HorizontalContentAlignment="Center" FontSize="16" Canvas.Top="-30" Foreground="White">Speler 2</Label>
+
+		<Canvas Name="player2" Height="150" Width="80" Canvas.Top="225" Canvas.Left="75">
+			<Label Width="80" Height="30" HorizontalContentAlignment="Center" FontSize="16" Canvas.Top="-30" Foreground="White">Speler 2</Label>
+			<Image Height="150" Source="Images/Ninja/Idle/1.png" RenderTransformOrigin="0.5, 0.5"/>
 		</Canvas>
 
 		<Label Name="scoreLabelPlayer1" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="485"/>

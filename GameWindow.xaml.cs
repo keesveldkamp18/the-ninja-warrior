@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -12,8 +14,8 @@ namespace project_arcade
 {
 	public partial class GameWindow : Window
 	{
-		#region global variables
-		#region player variables
+		#region Global Variables
+		#region Player Variables
 		private int gravityPlayer1;
 		private int gravityPlayer2;
 		private double lastTopPlayer1;
@@ -30,6 +32,10 @@ namespace project_arcade
 		private bool canJumpPlayer2;
 		private string namePlayer1;
 		private string namePlayer2;
+		private int animationTickPlayer1;
+		private int animationTickPlayer2;
+		private bool movingPlayer1;
+		private bool movingPlayer2;
 		#endregion
 
 		private DispatcherTimer timer = new DispatcherTimer();
@@ -95,29 +101,45 @@ namespace project_arcade
 
 			MovePlatforms();
 
+			AnimatePlayer();
+
+			BackgroundParallax();
+
 			PauseChecking();
 		}
 
 		private void PlayerMovement()
 		{
+			movingPlayer1 = false;
+
 			// Move left if the left arrow key is held and/or right if the right arrow key is held
 			if(Keyboard.IsKeyDown(Key.Left))
 			{
+				movingPlayer1 = true;
+				player1.Children.OfType<Image>().First().RenderTransform = new ScaleTransform(-1, 1);
 				Canvas.SetLeft(player1, Canvas.GetLeft(player1) - speed);
 			}
 
 			if(Keyboard.IsKeyDown(Key.Right))
 			{
+				movingPlayer1 = !movingPlayer1;
+				player1.Children.OfType<Image>().First().RenderTransform = new ScaleTransform(1, 1);
 				Canvas.SetLeft(player1, Canvas.GetLeft(player1) + speed);
 			}
 
+			movingPlayer2 = false;
+
 			if(Keyboard.IsKeyDown(Key.A))
 			{
+				movingPlayer2 = true;
+				player2.Children.OfType<Image>().First().RenderTransform = new ScaleTransform(-1, 1);
 				Canvas.SetLeft(player2, Canvas.GetLeft(player2) - speed);
 			}
 
 			if(Keyboard.IsKeyDown(Key.D))
 			{
+				movingPlayer2 = !movingPlayer2;
+				player2.Children.OfType<Image>().First().RenderTransform = new ScaleTransform(1, 1);
 				Canvas.SetLeft(player2, Canvas.GetLeft(player2) + speed);
 			}
 
@@ -202,18 +224,18 @@ namespace project_arcade
 			{
 				Canvas.SetLeft(player1, 0);
 			}
-			else if(Canvas.GetLeft(player1) > 1525)
+			else if(Canvas.GetLeft(player1) > 1600 - player1.Width)
 			{
-				Canvas.SetLeft(player1, 1525);
+				Canvas.SetLeft(player1, 1600 - player1.Width);
 			}
 
 			if(Canvas.GetLeft(player2) < 0)
 			{
 				Canvas.SetLeft(player2, 0);
 			}
-			else if(Canvas.GetLeft(player2) > 1525)
+			else if(Canvas.GetLeft(player2) > 1600 - player2.Width)
 			{
-				Canvas.SetLeft(player2, 1525);
+				Canvas.SetLeft(player2, 1600 - player2.Width);
 			}
 		}
 
@@ -236,7 +258,6 @@ namespace project_arcade
 					if(player1Rect.IntersectsWith(platformRect) && lastTopPlayer1 + player1.Height <= Canvas.GetTop(rectangle))
 					{
 						isDeadPlayer1 = true;
-						Canvas.SetTop(player1, Canvas.GetTop(rectangle) - player1.Height);
 					}
 				}
 
@@ -250,7 +271,6 @@ namespace project_arcade
 						if(player2Rect.IntersectsWith(platformRect) && lastTopPlayer2 + player1.Height <= Canvas.GetTop(rectangle))
 						{
 							isDeadPlayer2 = true;
-							Canvas.SetTop(player1, Canvas.GetTop(rectangle) - player2.Height);
 						}
 					}
 				}
@@ -370,7 +390,97 @@ namespace project_arcade
 				}
 			}
 
-			platformSpeed += 0.01;
+			platformSpeed += 0.0025;
+		}
+
+		private void AnimatePlayer()
+		{
+			// Increment the animation frame every tick and roll over every 40 ticks but change the player sprite every 4 ticks
+			if(!onFloorPlayer1)
+			{
+				if(!player1.Children.OfType<Image>().First().Source.ToString().Contains("Jump"))
+				{
+					animationTickPlayer1 = 0;
+				}
+
+				player1.Children.OfType<Image>().First().Source = new BitmapImage(new("Images/Ninja/Jump/" + animationTickPlayer1 / 4 + ".png", UriKind.Relative));
+				Canvas.SetLeft(player1.Children.OfType<Image>().First(), -15);
+				if(animationTickPlayer1 < 39)
+				{
+					animationTickPlayer1++;
+				}
+			}
+			else if(movingPlayer1)
+			{
+				if(!player1.Children.OfType<Image>().First().Source.ToString().Contains("Run"))
+				{
+					animationTickPlayer1 = 0;
+				}
+
+				player1.Children.OfType<Image>().First().Source = new BitmapImage(new("Images/Ninja/Run/" + animationTickPlayer1 / 4 + ".png", UriKind.Relative));
+				Canvas.SetLeft(player1.Children.OfType<Image>().First(), -20);
+				animationTickPlayer1 = (animationTickPlayer1 += 1) % 40;
+			}
+			else
+			{
+				if(!player1.Children.OfType<Image>().First().Source.ToString().Contains("Idle"))
+				{
+					animationTickPlayer1 = 0;
+				}
+
+				player1.Children.OfType<Image>().First().Source = new BitmapImage(new("Images/Ninja/Idle/" + animationTickPlayer1 / 4 + ".png", UriKind.Relative));
+				Canvas.SetLeft(player1.Children.OfType<Image>().First(), -0);
+				animationTickPlayer1 = (animationTickPlayer1 += 1) % 40;
+			}
+
+			if(!onFloorPlayer2)
+			{
+				if(!player2.Children.OfType<Image>().First().Source.ToString().Contains("Jump"))
+				{
+					animationTickPlayer2 = 0;
+				}
+
+				player2.Children.OfType<Image>().First().Source = new BitmapImage(new("Images/Ninja/Jump/" + animationTickPlayer2 / 4 + ".png", UriKind.Relative));
+				Canvas.SetLeft(player2.Children.OfType<Image>().First(), -15);
+				if(animationTickPlayer2 < 39)
+				{
+					animationTickPlayer2++;
+				}
+			}
+			else if(movingPlayer2)
+			{
+				if(!player2.Children.OfType<Image>().First().Source.ToString().Contains("Run"))
+				{
+					animationTickPlayer2 = 0;
+				}
+
+				player2.Children.OfType<Image>().First().Source = new BitmapImage(new("Images/Ninja/Run/" + animationTickPlayer2 / 4 + ".png", UriKind.Relative));
+				Canvas.SetLeft(player2.Children.OfType<Image>().First(), -20);
+				animationTickPlayer2 = (animationTickPlayer2 += 1) % 40;
+			}
+			else
+			{
+				if(!player2.Children.OfType<Image>().First().Source.ToString().Contains("Idle"))
+				{
+					animationTickPlayer2 = 0;
+				}
+
+				player2.Children.OfType<Image>().First().Source = new BitmapImage(new("Images/Ninja/Idle/" + animationTickPlayer2 / 4 + ".png", UriKind.Relative));
+				Canvas.SetLeft(player2.Children.OfType<Image>().First(), -0);
+				animationTickPlayer2 = (animationTickPlayer2 += 1) % 40;
+			}
+		}
+
+		private void BackgroundParallax()
+		{
+			var backgroundSegments = gameCanvas.Children.OfType<Image>().Where(b => (string)b.Tag == "Background").ToArray();
+
+			// Move each segment a little left to simulate depth
+			for(int i = 0; i < backgroundSegments.Length; i++)
+			{
+				var backgroundSegment = backgroundSegments[i];
+				Canvas.SetLeft(backgroundSegment, (Canvas.GetLeft(backgroundSegment) - ((i + 1) * 0.5) - (platformSpeed - 4)) % 4400);
+			}
 		}
 
 		/// <summary>
