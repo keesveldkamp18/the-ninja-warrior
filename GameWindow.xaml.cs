@@ -16,7 +16,9 @@ namespace project_arcade
 	{
 		DispatcherTimer timer = new DispatcherTimer();
 
-		private DateTime gameStart;
+		#region global variables
+		private const int speed = 10;
+        private DateTime gameStart;
 		private bool endGame = false;
 
         #region player variables
@@ -33,7 +35,7 @@ namespace project_arcade
         private bool player1IsDead;
         private bool player2IsDead;
         private string player1Name;
-		    private string player2Name;
+		private string player2Name;
         public bool secondPlayer = false;
         #endregion
 
