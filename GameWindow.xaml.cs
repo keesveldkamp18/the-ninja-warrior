@@ -199,14 +199,14 @@ namespace project_arcade
 			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
 
-			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
-				if((string)rectangle.Tag == "Platform")
+				if ((string)rectangle.Tag == "Platform")
 				{
 					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
 					// Don't let the player fall through a platform if the player was above or on it the previous tick
-					if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
+					if (player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
 					{
 						gravity1Player = 0;
 						Canvas.SetTop(Player1, Canvas.GetTop(rectangle) - Player1.Height);
@@ -222,6 +222,7 @@ namespace project_arcade
 				}
 			}
 		}
+
 
 		private void PauseChecking()
 		{
