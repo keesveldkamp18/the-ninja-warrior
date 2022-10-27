@@ -15,19 +15,21 @@
 
 		<Rectangle Height="425" Width="1600" Fill="DarkSlateBlue" Opacity="0.25" Canvas.Top="475" Canvas.Left="0"/>
 
-		<Rectangle Height="1" Width="1600" Tag="FloorP1" Fill="green" Canvas.Top="900" Canvas.Left="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-		<Rectangle Height="1" Width="1600" Tag="FloorP2" Fill="green" Canvas.Top="475" Canvas.Left="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+		<Rectangle Height="0" Width="1600" Tag="floorPlayer1" Canvas.Top="900" Canvas.Left="0"/>
+		<Rectangle Height="0" Width="1600" Tag="floorPlayer2" Canvas.Top="450" Canvas.Left="0"/>
 
-		<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="825" Canvas.Left="0"/>
-		<Rectangle Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="750" Canvas.Left="950"/>
+		<Rectangle Name="platform1Player1" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="825" Canvas.Left="0"/>
+		<Rectangle Name="platform2Player1" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="750" Canvas.Left="800"/>
+		<Rectangle Name="platform3Player1" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="675" Canvas.Left="1600"/>
 
-		<Rectangle Name="platform1Player2" Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="400" Canvas.Left="0"/>
-		<Rectangle Name="platform2Player2" Height="75" Width="650" Tag="Platform" Fill="LightGray" Canvas.Top="300" Canvas.Left="950"/>
+		<Rectangle Name="platform1Player2" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="375" Canvas.Left="0"/>
+		<Rectangle Name="platform2Player2" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="300" Canvas.Left="800"/>
+		<Rectangle Name="platform3Player2" Height="75" Width="500" Tag="Platform" Fill="LightGray" Canvas.Top="225" Canvas.Left="1600"/>
 
-		<Rectangle Name="Player1" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"/>
-		<Rectangle Name="Player2" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="250" Canvas.Left="75"/>
+		<Rectangle Name="player1" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="675" Canvas.Left="75"/>
+		<Rectangle Name="player2" Height="150" Width="75" Fill="CornflowerBlue" Canvas.Top="225" Canvas.Left="75"/>
 
-		<Label Name="scorePlayer1" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="10" />
-		<Label Name="scorePlayer2" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="481" HorizontalAlignment="Center" VerticalAlignment="Top" />
+		<Label Name="scoreLabelPlayer1" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="485"/>
+		<Label Name="scoreLabelPlayer2" Foreground="White" FontSize="32" FontWeight="Bold" Content="Score: 0" Canvas.Right="10" Canvas.Top="10"/>
 	</Canvas>
 </Window>

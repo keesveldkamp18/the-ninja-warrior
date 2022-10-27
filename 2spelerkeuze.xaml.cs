@@ -33,8 +33,7 @@ namespace project_arcade
 
         private void TwoPlayerToGame(object sender, RoutedEventArgs e)
         {
-            GameWindow gw = new GameWindow();
-            gw.secondPlayer = true;
+            GameWindow gw = new GameWindow(true);
             gw.Visibility = Visibility.Visible;
             this.Close();
         }
