@@ -12,12 +12,9 @@ namespace project_arcade
 {
 	public partial class GameWindow : Window
 	{
-		private readonly DispatcherTimer timer = new DispatcherTimer();
-
-        #region global variables
-
-        #region player variables
-        private int gravityPlayer1;
+		#region global variables
+		#region player variables
+		private int gravityPlayer1;
 		private int gravityPlayer2;
 		private double lastTopPlayer1;
 		private double lastTopPlayer2;
@@ -31,19 +28,19 @@ namespace project_arcade
 		private bool isDeadPlayer2;
 		private bool canJumpPlayer1;
 		private bool canJumpPlayer2;
-        private string player1Name;
-        private string player2Name;
-        #endregion
+    private string player1Name;
+    private string player2Name;
+    #endregion
 
-        private const int speed = 10;
-        private DateTime gameStartTime;
+		private DispatcherTimer timer = new DispatcherTimer();
+		private DateTime gameStartTime;
+		private const int speed = 10;
 		private double platformSpeed = 4.0;
-		private bool gameOver;
 		private bool secondPlayer;
+		private bool gameOver;
+		#endregion
 
-        #endregion
-
-        public GameWindow(bool secondPlayer)
+		public GameWindow(bool secondPlayer)
 		{
 			this.secondPlayer = secondPlayer;
 
