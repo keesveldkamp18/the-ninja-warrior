@@ -28,8 +28,8 @@ namespace project_arcade
 		private bool isDeadPlayer2;
 		private bool canJumpPlayer1;
 		private bool canJumpPlayer2;
-    private string player1Name;
-    private string player2Name;
+		private string player1Name;
+		private string player2Name;
     #endregion
 
 		private DispatcherTimer timer = new DispatcherTimer();
