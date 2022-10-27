@@ -9,12 +9,25 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MySql.Data" Version="8.0.31" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="Images\Background\1.png" />
 		<None Remove="Images\Background\2.png" />
 		<None Remove="Images\Background\3.png" />
 		<None Remove="Images\Background\4.png" />
 		<None Remove="Images\Background\5.png" />
 		<None Remove="Images\Ninja\Idle\1.png" />
+		<None Remove="Images\Ninja\Idle\10.png" />
+		<None Remove="Images\Ninja\Idle\2.png" />
+		<None Remove="Images\Ninja\Idle\3.png" />
+		<None Remove="Images\Ninja\Idle\4.png" />
+		<None Remove="Images\Ninja\Idle\5.png" />
+		<None Remove="Images\Ninja\Idle\6.png" />
+		<None Remove="Images\Ninja\Idle\7.png" />
+		<None Remove="Images\Ninja\Idle\8.png" />
+		<None Remove="Images\Ninja\Idle\9.png" />
 		<None Remove="Images\Ninja\Jump\1.png" />
 		<None Remove="Images\Ninja\Jump\10.png" />
 		<None Remove="Images\Ninja\Jump\2.png" />
@@ -37,14 +50,6 @@
 		<None Remove="Images\Ninja\Run\8.png" />
 		<None Remove="Images\Ninja\Run\9.png" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Resource Include="Images\Ninja\Idle\1.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="MySql.Data" Version="8.0.31" />
-	</ItemGroup>
 	
 	<ItemGroup>
 		<Resource Include="Images\Background\1.png" />
@@ -52,6 +57,16 @@
 		<Resource Include="Images\Background\3.png" />
 		<Resource Include="Images\Background\4.png" />
 		<Resource Include="Images\Background\5.png" />
+		<Resource Include="Images\Ninja\Idle\1.png" />
+		<Resource Include="Images\Ninja\Idle\10.png" />
+		<Resource Include="Images\Ninja\Idle\2.png" />
+		<Resource Include="Images\Ninja\Idle\3.png" />
+		<Resource Include="Images\Ninja\Idle\4.png" />
+		<Resource Include="Images\Ninja\Idle\5.png" />
+		<Resource Include="Images\Ninja\Idle\6.png" />
+		<Resource Include="Images\Ninja\Idle\7.png" />
+		<Resource Include="Images\Ninja\Idle\8.png" />
+		<Resource Include="Images\Ninja\Idle\9.png" />
 		<Resource Include="Images\Ninja\Jump\1.png" />
 		<Resource Include="Images\Ninja\Jump\10.png" />
 		<Resource Include="Images\Ninja\Jump\2.png" />
@@ -75,12 +90,4 @@
 		<Resource Include="Images\Ninja\Run\9.png" />
 	</ItemGroup>
 
-	<!--
-	<ItemGroup>
-		<Reference Include="MySql.Data">
-			<HintPath>C:\Program Files (x86)\MySQL\MySQL Connector NET 8.0.31\Assemblies\net6.0\MySql.Data.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-
-	-->
 </Project>
