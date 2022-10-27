@@ -33,6 +33,7 @@ namespace project_arcade
 
         private void TwoPlayerToGame(object sender, RoutedEventArgs e)
         {
+            // this variable will be used to make the second player apear on screen with the rest of the multiplayer function
             GameWindow gw = new GameWindow(true);
             gw.Visibility = Visibility.Visible;
             this.Close();

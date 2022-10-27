@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Linq;
 using System.Threading;
@@ -59,6 +59,10 @@ namespace project_arcade
 			gameStartTime = DateTime.Now;
 		}
 
+		/// <summary>
+		/// check if the game starts from multiplayer screen by making secondplayer variable true
+		/// if not it hides player 2 from the screen and the score
+		/// </summary>
 		private void CheckMultiplayer()
 		{
 			// Removes assets for the second player if the player chooses to play with only 1 player
@@ -130,7 +134,10 @@ namespace project_arcade
 			}
 		}
 
-		// Makes the players fall down
+		/// <summary>
+		/// Makes the player fall down when its up in the air.
+		/// ++ because of the axis is 0 based from top to bottom
+		/// </summary>
 		private void PlayerGravity()
 		{
 			lastTopPlayer1 = Canvas.GetTop(player1);
@@ -142,6 +149,10 @@ namespace project_arcade
 			Canvas.SetTop(player2, Canvas.GetTop(player2) + gravityPlayer2);
 		}
 
+		/// <summary>
+		/// When player hits the platforms the gravity will be zero not positive or negative.
+		/// This makes the player stays at the current level on the screen.
+		/// </summary>
 		private void PlayerCollisionDetection()
 		{
 			onFloorPlayer1 = false;
@@ -205,6 +216,10 @@ namespace project_arcade
 			}
 		}
 
+		/// <summary>
+		/// if the player hits the floor the game will end for that player.
+		/// player 1 and player 2 both have a different floor to fall on.
+		/// </summary>
 		private void CheckIfPlayerHitFloor()
 		{
 			Rect player1Rect = new(Canvas.GetLeft(player1), Canvas.GetTop(player1), player1.Width, player1.Height);
@@ -354,6 +369,9 @@ namespace project_arcade
 			platformSpeed += 0.01;
 		}
 
+		/// <summary>
+		/// When player hits the p key a message box will pop up and ask the user if it wants to continue or ends the game.
+		/// </summary>
 		private void PauseChecking()
 		{
 			// If P was pressed...
@@ -399,7 +417,6 @@ namespace project_arcade
 
 			//close connection
 			connection.Close();
-
 		}
 	}
 }
