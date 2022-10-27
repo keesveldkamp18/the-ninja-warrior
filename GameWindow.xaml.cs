@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
 using System;
 using System.Linq;
@@ -30,7 +31,8 @@ namespace project_arcade
 		private bool isDeadPlayer2;
 		private bool canJumpPlayer1;
 		private bool canJumpPlayer2;
-
+        private string player1Name;
+        private string player2Name;
         #endregion
 
         private const int speed = 10;
@@ -308,7 +310,9 @@ namespace project_arcade
 					{
 						if(MessageBox.Show("Player 1 score: " + Math.Round(scorePlayer1 + timerBonusPlayer1) + "\n" + "Player 2 score: " + Math.Round(scorePlayer2 + timerBonusPlayer2) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 						{
-							SubmitScore();
+                            player1Name = Interaction.InputBox("Please enter the name of Player 1.", "Enter name", "Player 1");
+                            player2Name = Interaction.InputBox("Please enter the name of Player 2.", "Enter name", "Player 2");
+                            SubmitScore();
 
 							MainWindow mw = new MainWindow();
 							mw.Visibility = Visibility.Visible;
@@ -334,7 +338,8 @@ namespace project_arcade
 					{
 						if(MessageBox.Show("Player 1 score: " + Math.Round(scorePlayer1 + timerBonusPlayer1) + "\n \n" + "Would you like to submit your scores to the highscore leaderboard?", "Game Over!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 						{
-							SubmitScore();
+                            player1Name = Interaction.InputBox("Please enter the name of Player 1.", "Enter name", "Player 1");
+                            SubmitScore();
 
 							MainWindow mw = new MainWindow();
 							mw.Visibility = Visibility.Visible;
@@ -402,20 +407,22 @@ namespace project_arcade
 			//Add score to DB
 			MySqlCommand addScore = new MySqlCommand();
 
-			//Submit player 1 score
-			addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES ('Player 1', @score)";
-			addScore.Parameters.AddWithValue("@score", Math.Round(scorePlayer1 + timerBonusPlayer1));
-			addScore.Connection = connection;
-			addScore.ExecuteNonQuery();
+            //Submit player 1 score
+            addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES (@player1name, @score)";
+            addScore.Parameters.AddWithValue("@score", Math.Round(scorePlayer1 + timerBonusPlayer1));
+            addScore.Parameters.AddWithValue("@player1name", player1Name);
+            addScore.Connection = connection;
+            addScore.ExecuteNonQuery();
 
-			//Submit player 2 score
-			if(secondPlayer)
+            //Submit player 2 score
+            if (secondPlayer)
 			{
-				addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES ('Player 2', @score2)";
-				addScore.Parameters.AddWithValue("@score2", Math.Round(scorePlayer2 + timerBonusPlayer2));
-				addScore.Connection = connection;
-				addScore.ExecuteNonQuery();
-			}
+                addScore.CommandText = "INSERT INTO scores (playerName, playerScore) VALUES (@player2name, @score2)";
+                addScore.Parameters.AddWithValue("@score2", Math.Round(scorePlayer2 + timerBonusPlayer2));
+                addScore.Parameters.AddWithValue("@player2name", player2Name);
+                addScore.Connection = connection;
+                addScore.ExecuteNonQuery();
+            }
 
 			//close connection
 			connection.Close();
