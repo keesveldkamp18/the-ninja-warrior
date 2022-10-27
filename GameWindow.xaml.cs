@@ -16,29 +16,31 @@ namespace project_arcade
 	{
 		DispatcherTimer timer = new DispatcherTimer();
 
-		private const int speed = 10;
-		private int gravity1Player;
-		private int gravity2Player;
-		private double lastPlayer1Top;
-		private double lastPlayer2Top;
-		private double player1Score;
-		private double player2Score;
-		private double player1TimerBonus;
-		private double player2TimerBonus;
-		private bool player1OnFloor;
-		private bool player2OnFloor;
-		private bool player1IsDead;
-		private bool player2IsDead;
-		private string player1Name;
-		private string player2Name;
 		private DateTime gameStart;
 		private bool endGame = false;
 
-		public bool secondPlayer = false;
-		public UIElement Platform2;
+        #region player variables
+        private int gravity1Player;
+        private int gravity2Player;
+        private double lastPlayer1Top;
+        private double lastPlayer2Top;
+        private double player1Score;
+        private double player2Score;
+        private double player1TimerBonus;
+        private double player2TimerBonus;
+        private bool player1OnFloor;
+        private bool player2OnFloor;
+        private bool player1IsDead;
+        private bool player2IsDead;
+        private string player1Name;
+		    private string player2Name;
+        public bool secondPlayer = false;
+        #endregion
+
+        #endregion
 
 
-		public GameWindow()
+        public GameWindow()
 		{
 			InitializeComponent();
 
@@ -75,6 +77,11 @@ namespace project_arcade
 			CheckPlayerDeath();
 		}
 
+
+		/// <summary>
+		/// check if the game starts from multiplayer screen by making secondplayer variable true
+		/// if not it hides player 2 from the screen and the score
+		/// </summary>
 		private void CheckMultiPlayer()
 		{
 
@@ -82,12 +89,16 @@ namespace project_arcade
 			if(!secondPlayer)
 			{
 				gameCanvas.Children.Remove(Player2);
-				// TODO: find a better solution ???
 				gameCanvas.Children.Remove(platform1Player2);
 				gameCanvas.Children.Remove(platform2Player2);
 				gameCanvas.Children.Remove(scorePlayer2);
 			}
 		}
+
+		/// <summary>
+		/// if the player hits the floor the game will end for that player.
+		/// player 1 and player 2 both have a different floor to fall on.
+		/// </summary>
 
 		private void CheckIfPlayerFals()
 		{
@@ -100,7 +111,6 @@ namespace project_arcade
 				{
 					Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
-					// when player hits the floor the game is over ??
 					if(player1Rect.IntersectsWith(platformRect) && lastPlayer1Top + Player1.Height <= Canvas.GetTop(rectangle))
 					{
 						player1IsDead = true;
@@ -115,7 +125,6 @@ namespace project_arcade
 					{
 						Rect platformRect = new(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
 
-						// when player hits the floor the game is over ??
 						if(player2Rect.IntersectsWith(platformRect) && lastPlayer2Top + Player1.Height <= Canvas.GetTop(rectangle))
 						{
 							player2IsDead = true;
@@ -172,6 +181,7 @@ namespace project_arcade
 			}
 
 			// Adds negative force if the jump key is pressed
+			// -- because the axis is 0 based and the lower you are the higher the number.
 			if(Keyboard.IsKeyDown(Key.Up) && player1OnFloor)
 			{
 				gravity1Player = -20;
@@ -185,7 +195,10 @@ namespace project_arcade
 			}
 		}
 
-		// Makes the player fall down
+		/// <summary>
+		/// Makes the player fall down when its up in the air.
+		/// ++ because of the axis is 0 based from top to bottom
+		/// </summary>
 		private void PlayerGravity()
 		{
 			lastPlayer1Top = Canvas.GetTop(Player1);
@@ -197,8 +210,13 @@ namespace project_arcade
 			Canvas.SetTop(Player2, Canvas.GetTop(Player2) + gravity2Player);
 		}
 
+		/// <summary>
+		/// When player hits the platforms the gravity will be zero not positive or negative.
+		/// This makes the player stays at the current level on the screen.
+		/// </summary>
 		private void PlayerCollisionDetection()
 		{
+			// get player rectangels from the gamecanvas
 			Rect player1Rect = new(Canvas.GetLeft(Player1), Canvas.GetTop(Player1), Player1.Width, Player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(Player2), Canvas.GetTop(Player2), Player2.Width, Player2.Height);
 
@@ -226,7 +244,9 @@ namespace project_arcade
 			}
 		}
 
-
+		/// <summary>
+		/// When player hits the p key a message box will pop up and ask the user if it wants to continue or ends the game.
+		/// </summary>
 		private void PauseChecking()
 		{
 			// If P was pressed...
