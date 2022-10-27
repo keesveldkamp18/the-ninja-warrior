@@ -1,13 +1,11 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace project_arcade
 {
@@ -15,9 +13,10 @@ namespace project_arcade
 	{
 		private readonly DispatcherTimer timer = new DispatcherTimer();
 
-		private const int speed = 10;
+        #region global variables
 
-		private int gravityPlayer1;
+        #region player variables
+        private int gravityPlayer1;
 		private int gravityPlayer2;
 		private double lastTopPlayer1;
 		private double lastTopPlayer2;
@@ -32,14 +31,17 @@ namespace project_arcade
 		private bool canJumpPlayer1;
 		private bool canJumpPlayer2;
 
-		private DateTime gameStartTime;
+        #endregion
 
+        private const int speed = 10;
+        private DateTime gameStartTime;
 		private double platformSpeed = 4.0;
-
 		private bool gameOver;
 		private bool secondPlayer;
 
-		public GameWindow(bool secondPlayer)
+        #endregion
+
+        public GameWindow(bool secondPlayer)
 		{
 			this.secondPlayer = secondPlayer;
 
@@ -225,7 +227,7 @@ namespace project_arcade
 			Rect player1Rect = new(Canvas.GetLeft(player1), Canvas.GetTop(player1), player1.Width, player1.Height);
 			Rect player2Rect = new(Canvas.GetLeft(player2), Canvas.GetTop(player2), player2.Width, player2.Height);
 
-			foreach (var rectangle in gameCanvas.Children.OfType<Rectangle>())
+			foreach(var rectangle in gameCanvas.Children.OfType<Rectangle>())
 			{
 				if((string)rectangle.Tag == "floorPlayer1")
 				{
